@@ -15,11 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ExplorePage(),
+      home: Bottomnavbar(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
-        'profilescreen': (context) => const ProfileScreen()
+        'profilescreen': (context) => const ProfileScreen(),
+        'explorepage': (context) => const ExplorePage(),
       },
     );
   }

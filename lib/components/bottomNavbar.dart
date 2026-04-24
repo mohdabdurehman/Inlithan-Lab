@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 
 class Bottomnavbar extends StatefulWidget {
@@ -14,8 +15,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
   final List<Widget> _pages = [
     const Center(child: Text('Home', style: TextStyle(color: Colors.white))),
     const Center(child: Text('Courses', style: TextStyle(color: Colors.white))),
-    const Center(child: Text('Explore', style: TextStyle(color: Colors.white))),
-    const ProfileScreen(), // ✅
+    const ExplorePage(),
+    const ProfileScreen(),
   ];
 
   @override
