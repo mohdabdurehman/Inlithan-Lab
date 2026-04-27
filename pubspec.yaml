@@ -70,6 +70,7 @@ flutter:
     - assets\stdLogo.png
     - assets\securityLogo.png
     - assets\logoutLogo.png
+    - assets\coursesIcon.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
+import 'package:mobile_version/pages/activities_page.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
@@ -16,13 +17,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CoursesPage(),
+      home: ActivitiesPage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
         'profilescreen': (context) => const ProfileScreen(),
         'explorepage': (context) => const ExplorePage(),
         'coursespage': (context) => const CoursesPage(),
+        'activitiespage': (context) => const ActivitiesPage(),
       },
     );
   }

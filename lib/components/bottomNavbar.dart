@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 
@@ -14,7 +15,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
 
   final List<Widget> _pages = [
     const Center(child: Text('Home', style: TextStyle(color: Colors.white))),
-    const Center(child: Text('Courses', style: TextStyle(color: Colors.white))),
+    const CoursesPage(),
     const ExplorePage(),
     const ProfileScreen(),
   ];
