@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ActivitiesPage extends StatelessWidget {
+class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({super.key});
+
+  @override
+  State<ActivitiesPage> createState() => _ActivitiesPageState();
+}
+
+class _ActivitiesPageState extends State<ActivitiesPage> {
+  int _selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> courses = [
       {
-        'code': 'All 426',
-        'title': 'Economics for Engineers',
-        'instructor': 'Aliyu Zafir',
+        'title': 'Quiz',
+        'code': 'Economics for Engineers',
+        'icon': 'assets/coursesIcon.png',
       },
       {
-        'code': 'COM 491',
-        'title': 'Graduation Project',
-        'instructor': 'Elbrus imanov',
+        'title': 'Notes',
+        'code': 'Graduation Project',
+        'icon': 'assets/coursesIcon.png',
       },
     ];
     return Scaffold(
@@ -52,15 +59,26 @@ class ActivitiesPage extends StatelessWidget {
           // ACTIVITIES CARDS
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
               itemCount: courses.length,
-              separatorBuilder: (__, _) => const SizedBox(height: 16),
+              separatorBuilder: (__, _) => const SizedBox(height: 24),
               itemBuilder: (context, index) {
-                return _CourseCard(
-                  code: courses[index]['code']!,
-                  title: courses[index]['title']!,
-                  instructor: courses[index]['instructor']!,
-                );
+                return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (_selectedIndex == index) {
+                          _selectedIndex = -1; // Deselect
+                        } else {
+                          _selectedIndex = index; // Select new card
+                        }
+                      });
+                    },
+                    child: _ActivitiesCard(
+                      title: courses[index]['title']!,
+                      coursename: courses[index]['code']!,
+                      icon: Image.asset('assets/coursesIcon.png'),
+                      filled: _selectedIndex == index,
+                    ));
               },
             ),
           ),
@@ -68,82 +86,99 @@ class ActivitiesPage extends StatelessWidget {
   }
 }
 
-class _CourseCard extends StatelessWidget {
-  final String code;
+class _ActivitiesCard extends StatelessWidget {
   final String title;
-  final String instructor;
+  final String coursename;
+  final Image icon;
+  final bool filled;
 
-  const _CourseCard({
-    required this.code,
+  const _ActivitiesCard({
     required this.title,
-    required this.instructor,
+    required this.coursename,
+    required this.icon,
+    required this.filled,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 368,
-      height: 309,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      width: double.infinity,
+      height: 197,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
       decoration: BoxDecoration(
-          color: const Color(0xff191A1F),
+          color: filled ? Color(0xff292f2f) : Color(0xff191A1F),
           borderRadius: BorderRadius.circular(8),
           border: Border(
             bottom: BorderSide(
-              color: Color(0xff8C8D8F),
+              color: Color(0xff292f2f),
               width: 1,
             ),
             top: BorderSide(
-              color: Color(0xff8C8D8F),
+              color: Color(0xff292f2f),
               width: 1,
             ),
             left: BorderSide(
-              color: Color(0xff8C8D8F),
+              color: Color(0xff292f2f),
               width: 4,
             ),
             right: BorderSide(
-              color: Color(0xff8C8D8F),
+              color: Color(0xff292f2f),
               width: 1,
             ),
           )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Course code
-          Text(
-            code,
-            style: GoogleFonts.raleway(
-              color: Color(0xff8B8C8F),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-
-          SizedBox(height: 16),
-
-          // Course title
+          // title
           Text(
             title,
             style: GoogleFonts.raleway(
-              color: Color(0xff8C8D8F),
-              fontSize: 16,
+              color: Color(0xffffffff),
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+
+          SizedBox(height: 16),
+
+          // course name
+          Text(
+            coursename,
+            style: GoogleFonts.raleway(
+              color: Color(0xffffffff),
+              fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
           ),
 
           SizedBox(height: 16),
 
-            // Instructor name
+          // courses with questions
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              instructor,
+              'All 426',
               style: GoogleFonts.raleway(
-                color: Color(0xff8B8C8F),
-                fontSize: 16,
+                color: Color(0xffffffff),
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
-          ],
-        ),
-      );
-    }
+            Text(
+              '15 questions',
+              style: GoogleFonts.raleway(
+                color: Color(0xffffffff),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ]),
+
+          SizedBox(height: 40),
+
+          // ICON
+          icon,
+        ],
+      ),
+    );
   }
+}
