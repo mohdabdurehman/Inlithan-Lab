@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/appBar.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -30,41 +31,7 @@ class ExplorePage extends StatelessWidget {
         child: Column(
           children: [
             // APP BAR
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 32),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Explore',
-                    style: GoogleFonts.raleway(
-                      color: Color(0xff8C8D8F),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.search,
-                            color: Color(0xff8C8D8F), size: 24),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.menu_open,
-                            color: Color(0xff8C8D8F), size: 24),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            //  Divider under appbar
-            Divider(color: Color(0xff8C8D8F), height: 1),
-
-            const SizedBox(height: 32),
+            Appbar(title: 'Explore'),
 
             //  COURSE CARDS
             Expanded(

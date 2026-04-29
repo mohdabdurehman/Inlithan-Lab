@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/appBar.dart';
 
 class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({super.key});
@@ -31,30 +32,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // APP BAR
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 32),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Activities',
-                      style: GoogleFonts.raleway(
-                        color: Color(0xff8C8D8F),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.search,
-                          color: Color(0xff8C8D8F), size: 24),
-                      onPressed: () {},
-                    ),
-                  ])),
-
-          // Divider under appbar
-          Divider(color: Color(0xff8C8D8F), height: 1),
-
-          SizedBox(height: 32),
+          Appbar(title: 'Activities'),
 
           // ACTIVITIES CARDS
           Expanded(

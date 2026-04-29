@@ -4,6 +4,7 @@ import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
+import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ActivitiesPage(),
+      home: HomePage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         'explorepage': (context) => const ExplorePage(),
         'coursespage': (context) => const CoursesPage(),
         'activitiespage': (context) => const ActivitiesPage(),
+        'homepage': (context) => HomePage(),
       },
     );
   }
