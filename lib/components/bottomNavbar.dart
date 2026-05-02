@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
+import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 
 class Bottomnavbar extends StatefulWidget {
@@ -14,7 +15,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const Center(child: Text('Home', style: TextStyle(color: Colors.white))),
+    HomePage(),
     const CoursesPage(),
     const ExplorePage(),
     const ProfileScreen(),

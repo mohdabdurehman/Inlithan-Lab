@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/coursesCard.dart';
 import '../components/appBar.dart';
+import '../components/activityCard.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = -1;
+
   final List<Map<String, String>> courses = [
     {
       'img': 'assets/coursesIcon.png',
@@ -17,12 +25,132 @@ class HomePage extends StatelessWidget {
     },
   ];
 
+  final List<Map<String, String>> activities = [
+    {
+      'title': 'Quiz',
+      'code': 'Economics for Engineers',
+      'icon': 'assets/coursesIcon.png',
+    },
+    {
+      'title': 'Notes',
+      'code': 'Graduation Project',
+      'icon': 'assets/coursesIcon.png',
+    },
+    {
+      'title': 'test',
+      'code': 'Graduation Project',
+      'icon': 'assets/coursesIcon.png',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
+
+      ///clauds code///
+      // body: SafeArea(
+      //   child: CustomScrollView(
+      //     slivers: [
+      //       SliverToBoxAdapter(child: Appbar(title: 'Courses')),
+      //       SliverToBoxAdapter(child: ResearchCard()),
+      //       SliverToBoxAdapter(child: SizedBox(height: 32)),
+      //       SliverToBoxAdapter(
+      //         child: Padding(
+      //           padding: const EdgeInsets.symmetric(horizontal: 30),
+      //           child: Text('Courses',
+      //               style: GoogleFonts.raleway(
+      //                   color: Colors.white,
+      //                   fontSize: 20,
+      //                   fontWeight: FontWeight.w500)),
+      //         ),
+      //       ),
+      //       SliverToBoxAdapter(child: SizedBox(height: 24)),
+
+      //       // grid
+      //       SliverPadding(
+      //         padding: const EdgeInsets.symmetric(horizontal: 22),
+      //         sliver: SliverGrid(
+      //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //             crossAxisCount: 2,
+      //             crossAxisSpacing: 24,
+      //             mainAxisSpacing: 32,
+      //             childAspectRatio: 1.0,
+      //           ),
+      //           delegate: SliverChildBuilderDelegate(
+      //             (context, index) => CourseCard(
+      //               imgIcon: Image.asset(courses[index]['img']!),
+      //               courseName: courses[index]['courseName']!,
+      //               code: courses[index]['code']!,
+      //             ),
+      //             childCount: courses.length,
+      //           ),
+      //         ),
+      //       ),
+
+      //       SliverToBoxAdapter(child: SizedBox(height: 64)),
+
+      //       // activities header
+      //       SliverToBoxAdapter(
+      //         child: Padding(
+      //           padding: const EdgeInsets.symmetric(horizontal: 30),
+      //           child: Row(
+      //             children: [
+      //               Text('Activities',
+      //                   style: GoogleFonts.raleway(
+      //                       color: Colors.white,
+      //                       fontSize: 20,
+      //                       fontWeight: FontWeight.w500)),
+      //               Spacer(),
+      //               Text('View More',
+      //                   style: GoogleFonts.raleway(
+      //                       color: Color(0xff00B764),
+      //                       fontSize: 16,
+      //                       fontWeight: FontWeight.w500)),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
+
+      //       SliverToBoxAdapter(child: SizedBox(height: 24)),
+
+      //       // horizontal activities list
+      //       SliverToBoxAdapter(
+      //         child: SizedBox(
+      //           height: 210,
+      //           child: ListView.separated(
+      //             scrollDirection: Axis.horizontal,
+      //             padding: const EdgeInsets.symmetric(horizontal: 30),
+      //             itemCount: activities.length,
+      //             separatorBuilder: (_, __) => const SizedBox(width: 24),
+      //             itemBuilder: (context, index) {
+      //               return GestureDetector(
+      //                 onTap: () {
+      //                   setState(() {
+      //                     _selectedIndex =
+      //                         _selectedIndex == index ? -1 : index;
+      //                   });
+      //                 },
+      //                 child: ActivitiesCard(
+      //                   title: activities[index]['title']!,
+      //                   coursename: activities[index]['code']!,
+      //                   icon: Image.asset(activities[index]['icon']!),
+      //                   filled: _selectedIndex == index,
+      //                 ),
+      //               );
+      //             },
+      //           ),
+      //         ),
+      //       ),
+
+      //       SliverToBoxAdapter(child: SizedBox(height: 32)),
+      //     ],
+      //   ),
+      // ));
+      /// MY OWN ///
       body: SafeArea(
         child: SingleChildScrollView(
+          ///for neglecting the bounces but it didnt change anything
+          // physics: const ClampingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -73,29 +201,60 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 64),
 
               //  activities section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Activities',
-                        style: GoogleFonts.raleway(
-                          color: Color(0xfffffffF),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        )),
-                    Text('View More',
-                        style: GoogleFonts.raleway(
-                          color: Color(0xff00B764),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        )),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Row(
+                      children: [
+                        Text('Activities',
+                            style: GoogleFonts.raleway(
+                              color: Color(0xfffffffF),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            )),
+                        Spacer(),
+                        Text('View More',
+                            style: GoogleFonts.raleway(
+                              color: Color(0xff00B764),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ],
+                    ),
+                  ),
 
-                    SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
-                    //  activities cards
-                  ],
-                ),
+                  //  activities cards
+                  SizedBox(
+                    height: 206,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      itemCount: activities.length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (__, _) => const SizedBox(width: 24),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (_selectedIndex == index) {
+                                  _selectedIndex = -1; // Deselect
+                                } else {
+                                  _selectedIndex = index; // Select new card
+                                }
+                              });
+                            },
+                            child: ActivitiesCard(
+                              title: activities[index]['title']!,
+                              coursename: activities[index]['code']!,
+                              icon: Image.asset(activities[index]['icon']!),
+                              filled: _selectedIndex == index,
+                            ));
+                      },
+                    ),
+                  ),
+                ],
               )
             ],
           ),

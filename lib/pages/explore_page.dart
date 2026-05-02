@@ -7,7 +7,7 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> courses = [
+    final List<Map<String, String>> explore = [
       {
         'code': 'All 426',
         'title': 'Economics for Engineers',
@@ -38,13 +38,13 @@ class ExplorePage extends StatelessWidget {
               child: ListView.separated(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                itemCount: courses.length,
-                separatorBuilder: (__, _) => const SizedBox(height: 16),
+                itemCount: explore.length,
+                separatorBuilder: (__, _) => const SizedBox(height: 54),
                 itemBuilder: (context, index) {
-                  return _CourseCard(
-                    code: courses[index]['code']!,
-                    title: courses[index]['title']!,
-                    instructor: courses[index]['instructor']!,
+                  return _ExploreCard(
+                    code: explore[index]['code']!,
+                    title: explore[index]['title']!,
+                    instructor: explore[index]['instructor']!,
                   );
                 },
               ),
@@ -56,14 +56,14 @@ class ExplorePage extends StatelessWidget {
   }
 }
 
-// Course Card Widget
+// Explore Card Widget
 
-class _CourseCard extends StatelessWidget {
+class _ExploreCard extends StatelessWidget {
   final String code;
   final String title;
   final String instructor;
 
-  const _CourseCard({
+  const _ExploreCard({
     required this.code,
     required this.title,
     required this.instructor,
@@ -142,16 +142,12 @@ class _CourseCard extends StatelessWidget {
               SizedBox(
                 height: 37,
                 width: 320,
-                child: Expanded(
-                  child: _CardButton(
-                    label: 'Request to Join',
-                    img: ImageIcon(
-                      AssetImage('assets/coursesLogo.png'),
-                      size: 16,
-                    ),
-                    color: const Color(0xff00B764),
-                    filled: true,
-                  ),
+                child: _CardButton(
+                  label: 'Request to Join',
+                  img: Image.asset('assets/coursesLogo.png',
+                      width: 16, height: 16),
+                  color: const Color(0xff00B764),
+                  filled: true,
                 ),
               ),
 
@@ -162,16 +158,12 @@ class _CourseCard extends StatelessWidget {
               SizedBox(
                 height: 37,
                 width: 320,
-                child: Expanded(
-                  child: _CardButton(
-                    label: 'Preview Course',
-                    img: ImageIcon(
-                      AssetImage('assets/coursesLogo.png'),
-                      size: 16,
-                    ),
-                    color: const Color(0xff00B764),
-                    filled: false,
-                  ),
+                child: _CardButton(
+                  label: 'Preview Course',
+                  img: Image.asset('assets/coursesLogo.png',
+                      width: 16, height: 16),
+                  color: const Color(0xff00B764),
+                  filled: false,
                 ),
               ),
             ],
@@ -186,7 +178,7 @@ class _CourseCard extends StatelessWidget {
 
 class _CardButton extends StatelessWidget {
   final String label;
-  final ImageIcon img;
+  final Image img;
   final Color color;
   final bool filled;
 
