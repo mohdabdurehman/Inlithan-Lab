@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_version/authintication/join_a_course.dart';
+import 'package:mobile_version/authintication/haveingActivites.dart';
+import 'package:mobile_version/authintication/noCourses_page.dart';
+import 'package:mobile_version/authintication/notAvailable_page.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: courseJoin(),
+      home: NotavailablePage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
