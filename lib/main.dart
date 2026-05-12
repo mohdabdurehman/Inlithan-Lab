@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_version/authintication/haveingActivites.dart';
-import 'package:mobile_version/authintication/noCourses_page.dart';
-import 'package:mobile_version/authintication/notAvailable_page.dart';
+
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
@@ -9,6 +7,7 @@ import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
+import 'package:mobile_version/pages/role_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NotavailablePage(),
+      home: RolePage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
