@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/quizCard.dart';
 
-class QuizPreview extends StatelessWidget {
-  const QuizPreview({super.key});
+class QuizCompleted extends StatelessWidget {
+  const QuizCompleted({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +40,18 @@ class QuizPreview extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: QuizCard(
           label: 'Quiz',
-          title: 'Quiz Preview',
-          questions: '50 questions',
-          duration: '30 minutes',
-          message: 'Good Luck :)',
-          icon: RotatedBox(
-            quarterTurns: 3,
-            child: Image.asset('assets/projectLogo.png',
-                width: 54, height: 120, color: const Color(0xff00B764)),
-          ),
-          showtwobtns: false,
+          title: 'Quiz Completed',
+          questions: null,
+          duration: null,
+          message:
+              'You answered 54 out of 55 \n questions and scored a 50 out of 55',
+          icon: Image.asset('assets/projectLogo.png',
+              width: 54, height: 120, color: const Color(0xff00B764)),
+          showtwobtns: true,
+
           //START BUTTON
-          Startbtn: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Quiz Started!'),
-                backgroundColor: Color(0xff00B764),
-              ),
-            );
-          },
+          Reviewbtn: () {},
+          Donebtn: () {},
         ),
       ),
     );

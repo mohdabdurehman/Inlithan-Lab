@@ -6,6 +6,7 @@ import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
+import 'package:mobile_version/pages/quiz_completed.dart';
 import 'package:mobile_version/pages/quiz_preview.dart';
 import 'package:mobile_version/pages/role_page.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: QuizPreview(),
+      home: QuizCompleted(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -29,7 +30,9 @@ class MyApp extends StatelessWidget {
         'coursespage': (context) => const CoursesPage(),
         'activitiespage': (context) => const ActivitiesPage(),
         'homepage': (context) => HomePage(),
-        "rolpage": (context) => const RolePage()
+        "rolpage": (context) => const RolePage(),
+        'quizpreview': (context) => const QuizPreview(),
+        'quizcompleted': (context) => const QuizCompleted(),
       },
     );
   }
