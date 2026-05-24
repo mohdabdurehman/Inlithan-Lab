@@ -89,7 +89,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
           decoration: BoxDecoration(
             color: const Color(0xff191A1F),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: const Color(0xff152826), width: 1),
+            border: Border.all(color: const Color(0xff152826), width: 2),
           ),
           padding: const EdgeInsets.all(30),
           child: Column(
@@ -118,7 +118,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                 ],
               ),
 
-              Divider(color: Color(0xff152826), height: 32),
+              Divider(color: Color(0xff152826), height: 32, thickness: 1),
 
               // PROGRESS
               Row(
