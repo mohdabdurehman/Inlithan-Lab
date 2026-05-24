@@ -4,6 +4,7 @@ import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
+import 'package:mobile_version/pages/flashCard_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/pendingActivities_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PendingActivities(),
+      home: FlashcardPage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         "rolpage": (context) => const RolePage(),
         'quizpreview': (context) => const QuizPreview(),
         'quizcompleted': (context) => const QuizCompleted(),
+        'pendingactivities': (context) => const PendingActivities(),
       },
     );
   }
