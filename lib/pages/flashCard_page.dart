@@ -53,8 +53,6 @@ class _FlashcardScreenState extends State<FlashcardPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final card = cards[_currentIndex];
-
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
 
@@ -93,7 +91,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: const Color(0xff152826), width: 1),
           ),
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -122,7 +120,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
 
               Divider(color: Color(0xff152826), height: 32),
 
-              // ── PROGRESS ──
+              // PROGRESS
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -134,28 +132,27 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                             : Colors.grey,
                         size: 28),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 28),
                   Container(
-                    width: 36,
-                    height: 36,
+                    width: 72,
+                    height: 35,
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(color: const Color(0xff00B764), width: 1),
-                      borderRadius: BorderRadius.circular(6),
+                      color: const Color(0xff152826),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                     child: Center(
                       child: Text('${_currentIndex + 1}',
-                          style: const TextStyle(
+                          style: GoogleFonts.raleway(
                               color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600)),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text('of ${cards.length}',
-                      style: const TextStyle(
-                          color: Color(0xff8C8D8F), fontSize: 14)),
-                  const SizedBox(width: 12),
+                      style: GoogleFonts.raleway(
+                          color: Color(0xff8C8D8F), fontSize: 16)),
+                  const SizedBox(width: 28),
                   GestureDetector(
                     onTap: _next,
                     child: Icon(Icons.chevron_right,
@@ -169,30 +166,30 @@ class _FlashcardScreenState extends State<FlashcardPage> {
 
               const SizedBox(height: 20),
 
-              // ── INNER CARD ──
+              // INNER CARD
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(24),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 64, vertical: 72),
                 decoration: BoxDecoration(
-                  color: const Color(0xff191A1F), // ✅ darker than outer
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xff2A2D3A), width: 1),
+                  color: const Color(0xff191A1F),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color(0xff8c8d8f), width: 1),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(_isFlipped ? 'Answer:' : 'Question:',
-                        style: const TextStyle(
+                        style: GoogleFonts.raleway(
                             color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 8),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500)),
                     Text(
                       _isFlipped
                           ? cards[_currentIndex]['answer']!
                           : cards[_currentIndex]['question']!,
-                      style: const TextStyle(
-                          color: Colors.white, fontSize: 15, height: 1.5),
+                      style: GoogleFonts.raleway(
+                          color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
@@ -200,15 +197,15 @@ class _FlashcardScreenState extends State<FlashcardPage> {
 
               const SizedBox(height: 20),
 
-              // ── FLIP ──
+              // FLIP
               Center(
                 child: GestureDetector(
                   onTap: _flip,
-                  child: const Text('Flip',
-                      style: TextStyle(
+                  child: Text('Flip',
+                      style: GoogleFonts.raleway(
                           color: Color(0xff00B764),
                           fontSize: 16,
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w500)),
                 ),
               ),
             ],
