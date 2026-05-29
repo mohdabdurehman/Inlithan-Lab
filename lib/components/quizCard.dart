@@ -93,7 +93,7 @@ class QuizCard extends StatelessWidget {
                               )),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       SizedBox(
                         width: 112,
                         height: 60,

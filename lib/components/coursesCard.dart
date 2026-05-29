@@ -7,6 +7,7 @@ class CourseCard extends StatelessWidget {
   final String code;
 
   const CourseCard({
+    super.key,
     required this.imgIcon,
     required this.courseName,
     required this.code,
@@ -15,13 +16,13 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 22,
         horizontal: 24,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Color(0xff303530), width: 1),
+        border: Border.all(color: const Color(0xff303530), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,25 +30,25 @@ class CourseCard extends StatelessWidget {
           //course img
           imgIcon,
 
-          Spacer(),
+          const Spacer(),
 
           //course name
           Text(
             courseName,
             style: GoogleFonts.raleway(
-              color: Color(0xfffeffff),
+              color: const Color(0xfffeffff),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           //course code
           Text(
             code,
             style: GoogleFonts.raleway(
-              color: Color(0xfffeffff),
+              color: const Color(0xfffeffff),
               fontSize: 14,
               fontWeight: FontWeight.w400,
             ),

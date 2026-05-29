@@ -24,14 +24,14 @@ class _BottomnavbarState extends State<Bottomnavbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff191A1F),
+      backgroundColor: const Color(0xff191A1F),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xff1E212A),
+          backgroundColor: const Color(0xff1E212A),
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xff00B764),
-          unselectedItemColor: Color(0xff8B8C8F),
+          selectedItemColor: const Color(0xff00B764),
+          unselectedItemColor: const Color(0xff8B8C8F),
           onTap: (index) {
             setState(() {
               _selectedIndex = index;
@@ -44,8 +44,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 0
-                      ? Color(0xff00B764)
-                      : Color(0xff8B8C8F),
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8B8C8F),
                 ),
                 label: "Home"),
             BottomNavigationBarItem(
@@ -54,8 +54,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 1
-                      ? Color(0xff00B764)
-                      : Color(0xff8B8C8F),
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8B8C8F),
                 ),
                 label: "Courses"),
             BottomNavigationBarItem(
@@ -64,8 +64,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 2
-                      ? Color(0xff00B764)
-                      : Color(0xff8B8C8F),
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8B8C8F),
                 ),
                 label: "Explore"),
             BottomNavigationBarItem(
@@ -74,8 +74,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 3
-                      ? Color(0xff00B764)
-                      : Color(0xff8B8C8F),
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8B8C8F),
                 ),
                 label: "Profile"),
           ]),

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../components/appBar.dart';
 
 class ExplorePage extends StatelessWidget {
-  const ExplorePage({Key? key}) : super(key: key);
+  const ExplorePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ExplorePage extends StatelessWidget {
         child: Column(
           children: [
             // APP BAR
-            Appbar(title: 'Explore'),
+            const Appbar(title: 'Explore'),
 
             //  COURSE CARDS
             Expanded(
@@ -78,7 +78,7 @@ class _ExploreCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0xff191A1F),
           borderRadius: BorderRadius.circular(8),
-          border: Border(
+          border: const Border(
             bottom: BorderSide(
               color: Color(0xff8C8D8F),
               width: 1,
@@ -103,31 +103,31 @@ class _ExploreCard extends StatelessWidget {
           Text(
             code,
             style: GoogleFonts.raleway(
-              color: Color(0xff8B8C8F),
+              color: const Color(0xff8B8C8F),
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // Course title
           Text(
             title,
             style: GoogleFonts.raleway(
-              color: Color(0xff8C8D8F),
+              color: const Color(0xff8C8D8F),
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // Instructor name
           Text(
             instructor,
             style: GoogleFonts.raleway(
-              color: Color(0xff8B8C8F),
+              color: const Color(0xff8B8C8F),
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
@@ -194,7 +194,7 @@ class _CardButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: filled ? color : Color(0xff152826),
+          backgroundColor: filled ? color : const Color(0xff152826),
           side: BorderSide(color: color, width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -205,12 +205,12 @@ class _CardButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset('assets/coursesLogo.png',
-                color: filled ? Color(0xff191A1F) : color),
+                color: filled ? const Color(0xff191A1F) : color),
             Text(label,
                 style: GoogleFonts.raleway(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: filled ? Color(0xff191A1F) : color))
+                    color: filled ? const Color(0xff191A1F) : color))
           ],
         ));
   }

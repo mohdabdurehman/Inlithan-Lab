@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +16,17 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 83),
             Text('Profile',
                 style: GoogleFonts.raleway(
-                  color: Color(0xffFFFFFF),
+                  color: const Color(0xffFFFFFF),
                   fontSize: 16,
                 )),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             informationCard(),
 
             /// not the same as the design
             const SizedBox(height: 200),
 
             buildLogoutButton(context),
-            SizedBox(height: 38),
+            const SizedBox(height: 38),
           ],
         ),
       ),
@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0xff1E212A),
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0xff152826))),
+          border: Border.all(color: const Color(0xff152826))),
       child: Column(
         children: [
           infoRow(
@@ -53,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
               'assets/profileLogo.png',
               width: 36,
               height: 28,
-              color: Color(0xff000B764),
+              color: const Color(0xff000b764),
             ),
             value: 'Big Moh ',
             label: 'Full name',
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                   Text(
                     value,
                     style: GoogleFonts.raleway(
-                      color: Color(0xffFFFFFF),
+                      color: const Color(0xffFFFFFF),
                       fontSize: 16,
                     ),
                   ),
@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                   Text(
                     label,
                     style: GoogleFonts.raleway(
-                      color: Color(0xff8B8C8F),
+                      color: const Color(0xff8B8C8F),
                       fontSize: 14,
                     ),
                   ),
@@ -133,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0xff1E212A),
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0xff152826))),
+          border: Border.all(color: const Color(0xff152826))),
       child: Row(
         children: [
           Container(

@@ -8,6 +8,7 @@ class ActivitiesCard extends StatelessWidget {
   final bool filled;
 
   const ActivitiesCard({
+    super.key,
     required this.title,
     required this.coursename,
     required this.icon,
@@ -21,9 +22,9 @@ class ActivitiesCard extends StatelessWidget {
       height: 197,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
       decoration: BoxDecoration(
-          color: filled ? Color(0xff292f2f) : Color(0xff191A1F),
+          color: filled ? const Color(0xff292f2f) : const Color(0xff191A1F),
           borderRadius: BorderRadius.circular(8),
-          border: Border(
+          border: const Border(
             bottom: BorderSide(
               color: Color(0xff292f2f),
               width: 1,
@@ -48,32 +49,32 @@ class ActivitiesCard extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.raleway(
-              color: Color(0xffffffff),
+              color: const Color(0xffffffff),
               fontSize: 14,
               fontWeight: FontWeight.w700,
             ),
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // course name
           Text(
             coursename,
             style: GoogleFonts.raleway(
-              color: Color(0xffffffff),
+              color: const Color(0xffffffff),
               fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           // courses with questions
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               'All 426',
               style: GoogleFonts.raleway(
-                color: Color(0xffffffff),
+                color: const Color(0xffffffff),
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
@@ -81,14 +82,14 @@ class ActivitiesCard extends StatelessWidget {
             Text(
               '15 questions',
               style: GoogleFonts.raleway(
-                color: Color(0xffffffff),
+                color: const Color(0xffffffff),
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
           ]),
 
-          SizedBox(height: 34),
+          const SizedBox(height: 34),
 
           // ICON
           icon,

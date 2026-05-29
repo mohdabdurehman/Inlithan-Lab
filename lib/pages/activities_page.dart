@@ -32,7 +32,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // APP BAR
-          Appbar(title: 'Activities'),
+          const Appbar(title: 'Activities'),
 
           // ACTIVITIES CARDS
           Expanded(

@@ -5,6 +5,8 @@ import '../components/appBar.dart';
 import '../components/activityCard.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -155,33 +157,33 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // APP BAR
-              Appbar(title: 'Courses'),
+              const Appbar(title: 'Courses'),
 
               // research box
-              ResearchCard(),
+              const ResearchCard(),
 
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   'Courses',
                   style: GoogleFonts.raleway(
-                    color: Color(0xfffffffF),
+                    color: const Color(0xfffffffF),
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               //  COURSE CARDS
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
                 child: GridView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: courses.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // 2 columns
@@ -198,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              SizedBox(height: 64),
+              const SizedBox(height: 64),
 
               //  activities section
               Column(
@@ -209,14 +211,14 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text('Activities',
                             style: GoogleFonts.raleway(
-                              color: Color(0xfffffffF),
+                              color: const Color(0xfffffffF),
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             )),
-                        Spacer(),
+                        const Spacer(),
                         Text('View More',
                             style: GoogleFonts.raleway(
-                              color: Color(0xff00B764),
+                              color: const Color(0xff00B764),
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             )),
@@ -271,18 +273,18 @@ class ResearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 30),
+        margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
-          color: Color(0xff1e212a),
+          color: const Color(0xff1e212a),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const _ResearchText(),
-                  const _PreviewButton(),
+                  _ResearchText(),
+                  _PreviewButton(),
                 ])));
   }
 }
@@ -295,7 +297,7 @@ class _ResearchText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(' Research Papers \n for the week',
         style: GoogleFonts.raleway(
-          color: Color(0xfffeffff),
+          color: const Color(0xfffeffff),
           fontSize: 16,
           fontWeight: FontWeight.w400,
         ));
@@ -310,7 +312,7 @@ class _PreviewButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xff00B764),
+        color: const Color(0xff00B764),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
@@ -318,10 +320,10 @@ class _PreviewButton extends StatelessWidget {
         child: Row(
           children: [
             Image.asset('assets/previewIcon.png'),
-            SizedBox(width: 26),
+            const SizedBox(width: 26),
             Text('Preview',
                 style: GoogleFonts.raleway(
-                  color: Color(0xff191a1f),
+                  color: const Color(0xff191a1f),
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                 )),

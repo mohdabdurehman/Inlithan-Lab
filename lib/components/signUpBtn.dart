@@ -9,6 +9,7 @@ class btnStyle extends StatelessWidget {
   final bool filled;
 
   const btnStyle({
+    super.key,
     required this.label,
     required this.img,
     required this.color,
@@ -20,8 +21,8 @@ class btnStyle extends StatelessWidget {
     return ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: filled ? color : Color(0xff00b764),
-          side: BorderSide(color: Color(0xff00b764), width: 1.5),
+          backgroundColor: filled ? color : const Color(0xff00b764),
+          side: const BorderSide(color: Color(0xff00b764), width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -33,12 +34,14 @@ class btnStyle extends StatelessWidget {
             img,
             Text(label,
                 style: GoogleFonts.raleway(
-                  color: filled ? Color(0xff00B764) : Color(0xff191A1F),
+                  color: filled
+                      ? const Color(0xff00B764)
+                      : const Color(0xff191A1F),
                   fontSize: 24,
                   fontWeight: FontWeight.w800,
                   shadows: filled
                       ? [
-                          Shadow(
+                          const Shadow(
                             color: Color(0xff000000),
                             blurRadius: 15,
                           )

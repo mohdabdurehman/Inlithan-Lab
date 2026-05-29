@@ -8,10 +8,10 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff191A1F),
+        backgroundColor: const Color(0xff191A1F),
         body: SafeArea(
             child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -24,34 +24,34 @@ class SignupPage extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // text
               Text('Welcome to Inlithan \n Labs',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.raleway(
-                    color: Color(0xff8B8C8F),
+                    color: const Color(0xff8B8C8F),
                     fontSize: 32,
                     fontWeight: FontWeight.w500,
                   )),
 
-              SizedBox(height: 80),
+              const SizedBox(height: 80),
 
               // GoogleButton
               btnStyle(
                 label: 'Signup with Google',
                 img:
                     Image.asset('assets/googleLogo.png', width: 32, height: 32),
-                color: Color(0xff152826),
+                color: const Color(0xff152826),
                 filled: true,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // GithubButton
               btnStyle(
                 label: 'Signup with Github',
                 img: Image.asset('assets/gitLogo.png', width: 32, height: 32),
-                color: Color(0xff152826),
+                color: const Color(0xff152826),
                 filled: false,
               ),
             ],

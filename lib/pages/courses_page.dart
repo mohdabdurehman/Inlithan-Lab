@@ -37,7 +37,7 @@ class CoursesPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // APP BAR
-            Appbar(title: 'Courses'),
+            const Appbar(title: 'Courses'),
 
             //  COURSE CARDS
             Expanded(
@@ -59,7 +59,7 @@ class CoursesPage extends StatelessWidget {
                 },
               ),
             )),
-            SizedBox(height: 256),
+            const SizedBox(height: 256),
           ],
         ),
       ),
@@ -68,7 +68,7 @@ class CoursesPage extends StatelessWidget {
       floatingActionButton: Container(
         width: 48,
         height: 48,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Color(0xff152826),
         ),

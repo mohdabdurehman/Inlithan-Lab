@@ -3,9 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Appbar extends StatelessWidget {
   final String title;
-  
-  const Appbar({super.key,
-   required this.title});
+
+  const Appbar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class Appbar extends StatelessWidget {
               Text(
                 title,
                 style: GoogleFonts.raleway(
-                  color: Color(0xff8C8D8F),
+                  color: const Color(0xff8C8D8F),
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
                 ),

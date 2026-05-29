@@ -44,7 +44,7 @@ class _RolePageState extends State<RolePage> {
                       'Which role suits your\n needs best?',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
-                        color: Color(0xff8b8c8f),
+                        color: const Color(0xff8b8c8f),
                         fontSize: 32,
                         fontWeight: FontWeight.w500,
                       ),
@@ -88,7 +88,7 @@ class _RolePageState extends State<RolePage> {
                             SnackBar(
                               content: Text('Selected: $_selected'),
                               backgroundColor: const Color(0xff00B764),
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                             ),
                           );
                         },
@@ -101,7 +101,7 @@ class _RolePageState extends State<RolePage> {
                   child: Text(
                     'Done',
                     style: GoogleFonts.raleway(
-                      color: Color(0xff191A1F),
+                      color: const Color(0xff191A1F),
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     ),
@@ -126,7 +126,7 @@ class _RolePageState extends State<RolePage> {
       margin: const EdgeInsets.only(bottom: 34),
       padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 32),
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xff152826) : Color(0xff191A1F),
+        color: isSelected ? const Color(0xff152826) : const Color(0xff191A1F),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
             color:
@@ -147,7 +147,7 @@ class _RolePageState extends State<RolePage> {
                   border: Border.all(
                     color: isSelected
                         ? const Color(0xff00B764)
-                        : Color(0xff152826),
+                        : const Color(0xff152826),
                     width: 2,
                   ),
                 ),
@@ -171,8 +171,9 @@ class _RolePageState extends State<RolePage> {
               Text(
                 title,
                 style: GoogleFonts.raleway(
-                  color:
-                      isSelected ? const Color(0xff00B764) : Color(0xff8C8D8F),
+                  color: isSelected
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8C8D8F),
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
                 ),
@@ -186,7 +187,9 @@ class _RolePageState extends State<RolePage> {
           Text(
             subtitle,
             style: GoogleFonts.raleway(
-              color: isSelected ? Color(0xff00B764) : Color(0xff8C8D8F),
+              color: isSelected
+                  ? const Color(0xff00B764)
+                  : const Color(0xff8C8D8F),
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),

@@ -1,19 +1,17 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AttemptingQuiz extends StatefulWidget {
-  const AttemptingQuiz({super.key});
+class testReview extends StatefulWidget {
+  const testReview({super.key});
 
   @override
-  State<AttemptingQuiz> createState() => _AttemptingQuizState();
+  State<testReview> createState() => _testReviewState();
 }
 
-class _AttemptingQuizState extends State<AttemptingQuiz> {
+class _testReviewState extends State<testReview> {
   int _currentIndex = 0;
   int? _selectedAnswer;
-  int _timeLeft = 656; // 10:56 in seconds
-  late Timer _timer;
+  bool _answered = false;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -48,41 +46,12 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
     },
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _startTimer();
-  }
-
-  // START COUNTDOWN TIMER
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_timeLeft > 0) {
-        setState(() => _timeLeft--);
-      } else {
-        _timer.cancel();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel(); // always cancel timer when screen closes
-    super.dispose();
-  }
-
-  //  FORMAT SECONDS TO MM:SS
-  String get _formattedTime {
-    final minutes = _timeLeft ~/ 60; // integer division
-    final seconds = _timeLeft % 60; // remainder
-    return '${minutes.toString().padLeft(2, '0')} : ${seconds.toString().padLeft(2, '0')}';
-  }
-
   void _next() {
     if (_currentIndex < questions.length - 1) {
       setState(() {
         _currentIndex++;
         _selectedAnswer = null; // reset selection
+        _answered = false; // reset answered state
       });
     }
   }
@@ -92,6 +61,7 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
       setState(() {
         _currentIndex--;
         _selectedAnswer = null;
+        _answered = false;
       });
     }
   }
@@ -113,7 +83,7 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          ' Quiz',
+          ' Quiz ',
           style: GoogleFonts.raleway(
               color: const Color(0xff8c8d8f),
               fontSize: 24,
@@ -143,18 +113,17 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              //  TIMER
               Center(
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   decoration: const BoxDecoration(
                     border: Border(
-                        bottom: BorderSide(color: Color(0xff00b764), width: 1)),
+                        bottom: BorderSide(color: Color(0xff00b764), width: 2)),
                     color: Color(0xff152826),
                   ),
                   child: Text(
-                    'Time Left:   $_formattedTime',
+                    'Quiz Review',
                     style: GoogleFonts.raleway(
                       color: const Color(0xff00B764),
                       fontSize: 16,
@@ -164,7 +133,7 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
                 ),
               ),
 
-              const Divider(color: Color(0xff152826), height: 32, thickness: 1),
+              const Divider(color: Color(0xff152826), height: 32, thickness: 2),
 
               //  PROGRESS
               Row(
@@ -220,19 +189,69 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
               const SizedBox(height: 20),
 
               //  ANSWER OPTIONS
+
               ...List.generate(q['answers'].length, (i) {
+                final int correct = q['correct'];
                 final bool isSelected = _selectedAnswer == i;
+                final bool isCorrect = i == correct;
+                final bool isWrongPick = isSelected && !isCorrect;
+
+                // ── background color ──
+                Color bgColor() {
+                  if (!_answered)
+                    return const Color(0xff152826); // before answering
+                  if (isCorrect)
+                    return const Color(0xff00B764); // correct = always green
+                  if (isWrongPick)
+                    return const Color(0xff152826); // wrong pick = dark bg
+                  return const Color(0xff152826); // untouched = dark
+                }
+
+                // ── border color ──
+                Color borderColor() {
+                  if (!_answered) return Colors.transparent;
+                  if (isWrongPick) return Colors.red; // wrong pick = red border
+                  return Colors.transparent;
+                }
+
+                // ── radio circle border color ──
+                Color radioBorderColor() {
+                  if (!_answered) return const Color(0xff00B764);
+                  if (isCorrect) return const Color(0xff152826); // on green bg
+                  if (isWrongPick) return Colors.red;
+                  return const Color(0xff00B764);
+                }
+
+                // ── radio dot color ──
+                Color radioDotColor() {
+                  if (isCorrect) return const Color(0xff152826);
+                  return Colors.red;
+                }
+
+                // ── text color ──
+                Color textColor() {
+                  if (_answered && isCorrect)
+                    return const Color(0xff152826); // dark on green
+                  return Colors.white;
+                }
+
                 return GestureDetector(
-                  onTap: () => setState(() => _selectedAnswer = i),
+                  onTap: () {
+                    if (!_answered) {
+                      setState(() {
+                        _selectedAnswer = i;
+                        _answered = true;
+                      });
+                    }
+                  },
                   child: Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(bottom: 20),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: isSelected
-                          ? const Color(0xff00b764)
-                          : const Color(0xff152826),
+                      color: bgColor(),
                       borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: borderColor(), width: 2),
                     ),
                     child: Row(
                       children: [
@@ -242,20 +261,16 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
                           height: 24,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isSelected
-                                  ? const Color(0xff152826)
-                                  : const Color(0xff00B764),
-                              width: 2,
-                            ),
+                            border:
+                                Border.all(color: radioBorderColor(), width: 2),
                           ),
-                          child: isSelected
+                          child: (_answered && (isCorrect || isWrongPick))
                               ? Center(
                                   child: Container(
                                     width: 16,
                                     height: 16,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xff152826),
+                                    decoration: BoxDecoration(
+                                      color: radioDotColor(),
                                       shape: BoxShape.circle,
                                     ),
                                   ),
@@ -266,10 +281,9 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
                         Expanded(
                           child: Text(q['answers'][i],
                               style: GoogleFonts.raleway(
-                                  color: isSelected
-                                      ? const Color(0xff152826)
-                                      : Colors.white,
-                                  fontSize: 16)),
+                                color: textColor(),
+                                fontSize: 16,
+                              )),
                         ),
                       ],
                     ),

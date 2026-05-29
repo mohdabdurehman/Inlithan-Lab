@@ -9,19 +9,19 @@ class courseJoin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff191A1F),
+        backgroundColor: const Color(0xff191A1F),
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // APP BAR
-            Appbar(title: 'Courses'),
+            const Appbar(title: 'Courses'),
 
-            SizedBox(height: 138),
+            const SizedBox(height: 138),
 
             // Content
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -37,36 +37,36 @@ class courseJoin extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   // text
                   Text(
                       'Your Courses and Activities \n will appear here once you join \n a course',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
-                        color: Color(0xff8B8C8F),
+                        color: const Color(0xff8B8C8F),
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       )),
 
-                  SizedBox(height: 64),
+                  const SizedBox(height: 64),
 
                   // GoogleButton
                   btnStyle(
                     label: 'Join a Course',
                     img: Image.asset('assets/coursesLogo.png',
-                        width: 32, height: 37, color: Color(0xff191A1F)),
-                    color: Color(0xff152826),
+                        width: 32, height: 37, color: const Color(0xff191A1F)),
+                    color: const Color(0xff152826),
                     filled: false,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
                   // GithubButton
                   btnStyle(
                     label: 'Explore Courses',
                     img: Image.asset('assets/exploreLogo.png',
-                        width: 32, height: 32, color: Color(0xff00B764)),
-                    color: Color(0xff152826),
+                        width: 32, height: 32, color: const Color(0xff00B764)),
+                    color: const Color(0xff152826),
                     filled: true,
                   ),
                 ],

@@ -68,7 +68,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
         title: Text(
           'Week 4: Software Development...',
           style: GoogleFonts.raleway(
-              color: Color(0xff8c8d8f),
+              color: const Color(0xff8c8d8f),
               fontSize: 24,
               fontWeight: FontWeight.w500),
         ),
@@ -103,14 +103,14 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 16),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(
-                            bottom: BorderSide(
-                                color: const Color(0xff00B764), width: 1)),
-                        color: const Color(0xff152826)),
+                            bottom:
+                                BorderSide(color: Color(0xff00B764), width: 1)),
+                        color: Color(0xff152826)),
                     child: Text('Flash Cards',
                         style: GoogleFonts.raleway(
-                            color: Color(0xff00B764),
+                            color: const Color(0xff00B764),
                             fontSize: 16,
                             fontWeight: FontWeight.w500)),
                   ),
@@ -118,7 +118,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                 ],
               ),
 
-              Divider(color: Color(0xff152826), height: 32, thickness: 1),
+              const Divider(color: Color(0xff152826), height: 32, thickness: 2),
 
               // PROGRESS
               Row(
@@ -151,7 +151,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                   const SizedBox(width: 8),
                   Text('of ${cards.length}',
                       style: GoogleFonts.raleway(
-                          color: Color(0xff8C8D8F), fontSize: 16)),
+                          color: const Color(0xff8C8D8F), fontSize: 16)),
                   const SizedBox(width: 28),
                   GestureDetector(
                     onTap: _next,
@@ -203,7 +203,7 @@ class _FlashcardScreenState extends State<FlashcardPage> {
                   onTap: _flip,
                   child: Text('Flip',
                       style: GoogleFonts.raleway(
-                          color: Color(0xff00B764),
+                          color: const Color(0xff00B764),
                           fontSize: 16,
                           fontWeight: FontWeight.w500)),
                 ),

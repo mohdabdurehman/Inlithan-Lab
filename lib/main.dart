@@ -1,3 +1,4 @@
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
@@ -11,6 +12,7 @@ import 'package:mobile_version/pages/profile_screen.dart';
 import 'package:mobile_version/pages/quiz_completed.dart';
 import 'package:mobile_version/pages/quiz_preview.dart';
 import 'package:mobile_version/pages/role_page.dart';
+import 'package:mobile_version/pages/testReview_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AttemptingQuiz(),
+      home: testReview(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -31,11 +33,13 @@ class MyApp extends StatelessWidget {
         'explorepage': (context) => const ExplorePage(),
         'coursespage': (context) => const CoursesPage(),
         'activitiespage': (context) => const ActivitiesPage(),
-        'homepage': (context) => HomePage(),
+        'homepage': (context) => const HomePage(),
         "rolpage": (context) => const RolePage(),
         'quizpreview': (context) => const QuizPreview(),
         'quizcompleted': (context) => const QuizCompleted(),
         'pendingactivities': (context) => const PendingActivities(),
+        'attemptingquiz': (context) => const AttemptingQuiz(),
+        // 'testreview': (context) => const TestReview(userAnswers: []),
       },
     );
   }

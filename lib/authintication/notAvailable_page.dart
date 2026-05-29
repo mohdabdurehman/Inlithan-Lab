@@ -9,19 +9,19 @@ class NotavailablePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff191A1F),
+        backgroundColor: const Color(0xff191A1F),
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // APP BAR
-            Appbar(title: 'Explore'),
+            const Appbar(title: 'Explore'),
 
-            SizedBox(height: 240),
+            const SizedBox(height: 240),
 
             // Content
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -37,14 +37,14 @@ class NotavailablePage extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   // text
                   Text(
                       'There are currently no courses \n available for you to explore',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
-                        color: Color(0xff8B8C8F),
+                        color: const Color(0xff8B8C8F),
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       )),

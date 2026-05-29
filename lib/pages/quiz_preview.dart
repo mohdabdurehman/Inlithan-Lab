@@ -21,7 +21,7 @@ class QuizPreview extends StatelessWidget {
         title: Text(
           'Quiz',
           style: GoogleFonts.raleway(
-              color: Color(0xff8c8d8f),
+              color: const Color(0xff8c8d8f),
               fontSize: 24,
               fontWeight: FontWeight.w500),
         ),

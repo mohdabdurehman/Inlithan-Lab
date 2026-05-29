@@ -70,7 +70,7 @@ class _PendingActivitiesState extends State<PendingActivities> {
       WeekItem(week: 'Week 3:', title: 'Cost Estimation Techniques'),
     ];
 
-    final String aboutText =
+    const String aboutText =
         'Engineering Economics bridges the gap between technical decision-making and financial reasoning. This course introduces students to the principles of economic analysis applied to engineering projects, helping them evaluate costs, benefits, risks, and sustainability. Students will learn how to:\n\n'
         '• Apply time value of money concepts to real-world engineering problems.\n\n'
         '• Compare alternative designs and investments using cash flow analysis.\n\n'
@@ -94,7 +94,7 @@ class _PendingActivitiesState extends State<PendingActivities> {
         title: Text(
           'Economics for engineers',
           style: GoogleFonts.raleway(
-              color: Color(0xff8c8d8f),
+              color: const Color(0xff8c8d8f),
               fontSize: 24,
               fontWeight: FontWeight.w500),
         ),
@@ -158,7 +158,7 @@ class _PendingActivitiesState extends State<PendingActivities> {
           //  CURRICULUM TITLE
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(30, 32, 30, 12),
+              padding: const EdgeInsets.fromLTRB(30, 32, 30, 12),
               child: Text('Curriculum',
                   style: GoogleFonts.raleway(
                       color: Colors.white,
@@ -200,7 +200,7 @@ class _PendingActivitiesState extends State<PendingActivities> {
                   const SizedBox(height: 32),
                   Text(aboutText,
                       style: GoogleFonts.raleway(
-                          color: Color(0xff8C8D8F), fontSize: 24)),
+                          color: const Color(0xff8C8D8F), fontSize: 24)),
                 ],
               ),
             ),
@@ -231,7 +231,8 @@ class _WeekTile extends StatelessWidget {
           color: const Color(0xff191A1F),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isExpanded ? const Color(0xff00B764) : Color(0xff152826),
+            color:
+                isExpanded ? const Color(0xff00B764) : const Color(0xff152826),
             width: 1,
           ),
         ),
@@ -241,7 +242,9 @@ class _WeekTile extends StatelessWidget {
             //  Header row
             Container(
               decoration: BoxDecoration(
-                color: isExpanded ? const Color(0xff00B764) : Color(0xff191A1F),
+                color: isExpanded
+                    ? const Color(0xff00B764)
+                    : const Color(0xff191A1F),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
@@ -253,7 +256,7 @@ class _WeekTile extends StatelessWidget {
                   Text('${weeknum.week}  ',
                       style: GoogleFonts.raleway(
                         color: isExpanded
-                            ? Color(0xff191a1f)
+                            ? const Color(0xff191a1f)
                             : const Color(0xff8C8D8F),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -262,7 +265,7 @@ class _WeekTile extends StatelessWidget {
                     child: Text(weeknum.title,
                         style: GoogleFonts.raleway(
                           color: isExpanded
-                              ? Color(0xff191a1f)
+                              ? const Color(0xff191a1f)
                               : const Color(0xff8C8D8F),
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -273,7 +276,7 @@ class _WeekTile extends StatelessWidget {
                         ? Icons.keyboard_arrow_up
                         : Icons.keyboard_arrow_down,
                     color: isExpanded
-                        ? Color(0xff191a1f)
+                        ? const Color(0xff191a1f)
                         : const Color(0xff00B764), // ✅ white on green
                     size: 22,
                   ),
@@ -291,7 +294,7 @@ class _WeekTile extends StatelessWidget {
                   children: [
                     Text(weeknum.description!,
                         style: GoogleFonts.raleway(
-                          color: Color(0xff8C8D8F),
+                          color: const Color(0xff8C8D8F),
                           fontSize: 16,
                         )),
                     const SizedBox(height: 28),
@@ -309,7 +312,7 @@ class _WeekTile extends StatelessWidget {
                       child: Text('Resume',
                           style: GoogleFonts.raleway(
                               fontSize: 24,
-                              color: Color(0xff00B764),
+                              color: const Color(0xff00B764),
                               fontWeight: FontWeight.w700)),
                     ),
                   ],

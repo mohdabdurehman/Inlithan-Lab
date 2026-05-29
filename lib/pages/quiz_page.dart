@@ -1,19 +1,16 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AttemptingQuiz extends StatefulWidget {
-  const AttemptingQuiz({super.key});
+class QuizScreen extends StatefulWidget {
+  const QuizScreen({super.key});
 
   @override
-  State<AttemptingQuiz> createState() => _AttemptingQuizState();
+  State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _AttemptingQuizState extends State<AttemptingQuiz> {
+class _QuizScreenState extends State<QuizScreen> {
   int _currentIndex = 0;
   int? _selectedAnswer;
-  int _timeLeft = 656; // 10:56 in seconds
-  late Timer _timer;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -47,36 +44,6 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
       'correct': 1,
     },
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _startTimer();
-  }
-
-  // START COUNTDOWN TIMER
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_timeLeft > 0) {
-        setState(() => _timeLeft--);
-      } else {
-        _timer.cancel();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel(); // always cancel timer when screen closes
-    super.dispose();
-  }
-
-  //  FORMAT SECONDS TO MM:SS
-  String get _formattedTime {
-    final minutes = _timeLeft ~/ 60; // integer division
-    final seconds = _timeLeft % 60; // remainder
-    return '${minutes.toString().padLeft(2, '0')} : ${seconds.toString().padLeft(2, '0')}';
-  }
 
   void _next() {
     if (_currentIndex < questions.length - 1) {
@@ -143,18 +110,17 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              //  TIMER
               Center(
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   decoration: const BoxDecoration(
                     border: Border(
-                        bottom: BorderSide(color: Color(0xff00b764), width: 1)),
+                        bottom: BorderSide(color: Color(0xff00b764), width: 2)),
                     color: Color(0xff152826),
                   ),
                   child: Text(
-                    'Time Left:   $_formattedTime',
+                    'Quiz',
                     style: GoogleFonts.raleway(
                       color: const Color(0xff00B764),
                       fontSize: 16,
@@ -164,7 +130,7 @@ class _AttemptingQuizState extends State<AttemptingQuiz> {
                 ),
               ),
 
-              const Divider(color: Color(0xff152826), height: 32, thickness: 1),
+              const Divider(color: Color(0xff152826), height: 32, thickness: 2),
 
               //  PROGRESS
               Row(
