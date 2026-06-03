@@ -1,9 +1,9 @@
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
-// import 'package:mobile_version/authintication/joiningAcourse_page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
+import 'package:mobile_version/pages/aiAsking_page.dart';
+import 'package:mobile_version/pages/code_page.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/attemptingQuiz_page.dart';
@@ -13,8 +13,7 @@ import 'package:mobile_version/pages/profile_screen.dart';
 import 'package:mobile_version/pages/quiz_completed.dart';
 import 'package:mobile_version/pages/quiz_preview.dart';
 import 'package:mobile_version/pages/role_page.dart';
-import 'package:mobile_version/pages/aiLabHistory_page.dart';
-// import 'package:mobile_version/pages/testReview_page.dart';
+import 'package:mobile_version/pages/aiChat_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LabHistory(),
+      home: AiChatPage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
         'quizcompleted': (context) => const QuizCompleted(),
         'pendingactivities': (context) => const PendingActivities(),
         'attemptingquiz': (context) => const AttemptingQuiz(),
-        // 'testreview': (context) => const TestReview(userAnswers: []),
       },
     );
   }
