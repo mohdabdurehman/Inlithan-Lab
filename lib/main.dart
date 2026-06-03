@@ -8,6 +8,7 @@ import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/attemptingQuiz_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
+import 'package:mobile_version/pages/notifications_page.dart';
 import 'package:mobile_version/pages/pendingActivities_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 import 'package:mobile_version/pages/quiz_completed.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AiChatPage(),
+      home: HomePage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),

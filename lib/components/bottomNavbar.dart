@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
-import 'package:mobile_version/pages/profile_screen.dart';
+import 'package:mobile_version/pages/aiLabHistory_page.dart';
+import 'package:mobile_version/pages/activities_page.dart';
+// import 'package:mobile_version/pages/profile_screen.dart';
 
 class Bottomnavbar extends StatefulWidget {
   const Bottomnavbar({super.key});
@@ -17,8 +19,10 @@ class _BottomnavbarState extends State<Bottomnavbar> {
   final List<Widget> _pages = [
     HomePage(),
     const CoursesPage(),
+    const LabHistory(),
+    const ActivitiesPage(),
     const ExplorePage(),
-    const ProfileScreen(),
+    // const ProfileScreen(),
   ];
 
   @override
@@ -60,24 +64,44 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                 label: "Courses"),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  'assets/exploreLogo.png',
+                  'assets/labLogo.png',
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 2
                       ? const Color(0xff00B764)
                       : const Color(0xff8B8C8F),
                 ),
-                label: "Explore"),
+                label: "AI Lab"),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  'assets/profileLogo.png',
+                  'assets/coursesIcon.png',
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 3
                       ? const Color(0xff00B764)
                       : const Color(0xff8B8C8F),
                 ),
-                label: "Profile"),
+                label: "Activities"),
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/exploreLogo.png',
+                  width: 60,
+                  height: 44,
+                  color: _selectedIndex == 4
+                      ? const Color(0xff00B764)
+                      : const Color(0xff8B8C8F),
+                ),
+                label: "Explore"),
+            // BottomNavigationBarItem(
+            //     icon: Image.asset(
+            //       'assets/profileLogo.png',
+            //       width: 60,
+            //       height: 44,
+            //       color: _selectedIndex == 3
+            //           ? const Color(0xff00B764)
+            //           : const Color(0xff8B8C8F),
+            //     ),
+            //     label: "Profile"),
           ]),
     );
   }
