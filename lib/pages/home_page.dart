@@ -25,11 +25,6 @@ class _HomePageState extends State<HomePage> {
       'courseName': 'Graduation Project',
       'code': 'COM 491',
     },
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Graduation Project',
-      'code': 'COM 491',
-    },
   ];
 
   final List<Map<String, String>> activities = [
@@ -39,12 +34,7 @@ class _HomePageState extends State<HomePage> {
       'icon': 'assets/coursesIcon.png',
     },
     {
-      'title': 'n',
-      'code': 'Graduation Project',
-      'icon': 'assets/coursesIcon.png',
-    },
-    {
-      'title': 'test',
+      'title': 'Notes',
       'code': 'Graduation Project',
       'icon': 'assets/coursesIcon.png',
     },
@@ -65,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             SliverToBoxAdapter(child: Appbar(title: 'Courses')),
 
             // RESEARCH BOX
-            // SliverToBoxAdapter(child: ResearchCard()),
+            SliverToBoxAdapter(child: ResearchCard()),
 
             SliverToBoxAdapter(child: SizedBox(height: 32)),
 
@@ -290,71 +280,74 @@ class _HomePageState extends State<HomePage> {
 //     );
 //   }
 // }
+    );
+  }
+}
 
-// //  Research Card Widget
-// class ResearchCard extends StatelessWidget {
-//   const ResearchCard({super.key});
+//  Research Card Widget
+class ResearchCard extends StatelessWidget {
+  const ResearchCard({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         margin: const EdgeInsets.symmetric(horizontal: 30),
-//         decoration: BoxDecoration(
-//           color: const Color(0xff1e212a),
-//           borderRadius: BorderRadius.circular(8),
-//         ),
-//         child: const Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-//             child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   _ResearchText(),
-//                   _PreviewButton(),
-//                 ])));
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 30),
+        decoration: BoxDecoration(
+          color: const Color(0xff1e212a),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _ResearchText(),
+                  _PreviewButton(),
+                ])));
+  }
+}
 
-// // Research text Widget
-// class _ResearchText extends StatelessWidget {
-//   const _ResearchText();
+//Research text Widget
+class _ResearchText extends StatelessWidget {
+  const _ResearchText();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text(' Research Papers \n for the week',
-//         style: GoogleFonts.raleway(
-//           color: const Color(0xfffeffff),
-//           fontSize: 16,
-//           fontWeight: FontWeight.w400,
-//         ));
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Text(' Research Papers \n for the week',
+        style: GoogleFonts.raleway(
+          color: const Color(0xfffeffff),
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ));
+  }
+}
 
-// // Preview Button Widget
-// class _PreviewButton extends StatelessWidget {
-//   const _PreviewButton();
+// Preview Button Widget
+class _PreviewButton extends StatelessWidget {
+  const _PreviewButton();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: const Color(0xff00B764),
-//         borderRadius: BorderRadius.circular(8),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//         child: Row(
-//           children: [
-//             Image.asset('assets/previewIcon.png'),
-//             const SizedBox(width: 26),
-//             Text('Preview',
-//                 style: GoogleFonts.raleway(
-//                   color: const Color(0xff191a1f),
-//                   fontSize: 16,
-//                   fontWeight: FontWeight.w700,
-//                 )),
-//           ],
-//         ),
-//       ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xff00B764),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            Image.asset('assets/previewIcon.png'),
+            const SizedBox(width: 26),
+            Text('Preview',
+                style: GoogleFonts.raleway(
+                  color: const Color(0xff191a1f),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                )),
+          ],
+        ),
+      ),
     );
   }
 }
