@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/coursesCard.dart';
-import '../components/appBar.dart';
-import '../components/activityCard.dart';
+import 'package:mobile_version/Dashboard/teacherSide/components/coursesCard.dart';
+import 'package:mobile_version/Dashboard/teacherSide/components/activitiesCard.dart';
+import '/components/appBar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePageT extends StatefulWidget {
+  const HomePageT({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageT> createState() => _HomePageTState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageTState extends State<HomePageT> {
   int _selectedIndex = -1;
 
   final List<Map<String, String>> courses = [
@@ -19,11 +19,13 @@ class _HomePageState extends State<HomePage> {
       'img': 'assets/coursesIcon.png',
       'courseName': 'Economics for Engineers',
       'code': 'All 426',
+      'stdNum': '124 students',
     },
     {
       'img': 'assets/coursesIcon.png',
       'courseName': 'Graduation Project',
       'code': 'COM 491',
+      'stdNum': '12 students',
     },
   ];
 
@@ -31,16 +33,19 @@ class _HomePageState extends State<HomePage> {
     {
       'title': 'Quiz',
       'code': 'Economics for Engineers',
+      'date': 'Submissions: 24/32',
       'icon': 'assets/coursesIcon.png',
     },
     {
-      'title': 'Notes',
+      'title': 'Assignmets',
       'code': 'Graduation Project',
+      'date': 'Submissions: 14/44',
       'icon': 'assets/coursesIcon.png',
     },
     {
-      'title': 'test',
+      'title': 'Exam',
       'code': 'Graduation Project',
+      'date': 'Submissions: 65/18',
       'icon': 'assets/coursesIcon.png',
     },
   ];
@@ -52,7 +57,12 @@ class _HomePageState extends State<HomePage> {
         child: CustomScrollView(
           slivers: [
             // APP BAR
-            SliverToBoxAdapter(child: Appbar(title: 'Home')),
+            SliverToBoxAdapter(
+                child: Appbar(
+              title: 'Home',
+              showIcon: Icon(Icons.person_rounded,
+                  color: Color(0xff8C8D8F), size: 28),
+            )),
 
             // RESEARCH BOX
             SliverToBoxAdapter(child: ResearchCard()),
@@ -85,45 +95,35 @@ class _HomePageState extends State<HomePage> {
                   childAspectRatio: 1.0,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => CourseCard(
+                  (context, index) => CourseCardT(
                     imgIcon: Image.asset(courses[index]['img']!),
                     courseName: courses[index]['courseName']!,
                     code: courses[index]['code']!,
+                    stdNum: courses[index]['stdNum']!,
                   ),
                   childCount: courses.length,
                 ),
               ),
             ),
 
-            SliverToBoxAdapter(child: SizedBox(height: 64)),
+            SliverToBoxAdapter(child: SizedBox(height: 31)),
 
             // ACTIVITIES HEADER
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  children: [
-                    Text('Activities',
-                        style: GoogleFonts.raleway(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        )),
-                    const Spacer(),
-                    Text('View More',
-                        style: GoogleFonts.raleway(
-                          color: Color(0xff00B764),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        )),
-                  ],
-                ),
+                child: Text('Activities',
+                    style: GoogleFonts.raleway(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    )),
               ),
             ),
 
-            SliverToBoxAdapter(child: SizedBox(height: 24)),
+            SliverToBoxAdapter(child: SizedBox(height: 20)),
 
-            // ✅ HORIZONTAL LIST — works perfectly inside CustomScrollView
+            //
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 206,
@@ -143,9 +143,10 @@ class _HomePageState extends State<HomePage> {
                                 _selectedIndex == index ? -1 : index;
                           });
                         },
-                        child: ActivitiesCard(
+                        child: ActivitiesCardT(
                           title: activities[index]['title']!,
                           coursename: activities[index]['code']!,
+                          date: activities[index]['date']!,
                           icon: Image.asset(activities[index]['icon']!),
                           filled: _selectedIndex == index,
                         ),
@@ -155,7 +156,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
             SliverToBoxAdapter(child: SizedBox(height: 32)),
           ],
         ),
@@ -170,30 +170,60 @@ class ResearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-          color: const Color(0xff1e212a),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+            color: const Color(0xff1e212a),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _ResearchText(),
-                  _PreviewButton(),
-                ])));
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ResearchText(text: "New Student\n Requests"),
+                _PreviewButton(text: "View List"),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 32),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+            color: const Color(0xff1e212a),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ResearchText(text: "Research Papers\n for the week"),
+                _PreviewButton(text: "Preview"),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
 //Research text Widget
 class _ResearchText extends StatelessWidget {
-  const _ResearchText();
+  final String text;
+
+  const _ResearchText({
+    super.key,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Text(' Research Papers \n for the week',
+    return Text(text,
         style: GoogleFonts.raleway(
           color: const Color(0xfffeffff),
           fontSize: 16,
@@ -204,7 +234,12 @@ class _ResearchText extends StatelessWidget {
 
 // Preview Button Widget
 class _PreviewButton extends StatelessWidget {
-  const _PreviewButton();
+  final String text;
+
+  const _PreviewButton({
+    super.key,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +254,7 @@ class _PreviewButton extends StatelessWidget {
           children: [
             Image.asset('assets/previewIcon.png'),
             const SizedBox(width: 26),
-            Text('Preview',
+            Text(text,
                 style: GoogleFonts.raleway(
                   color: const Color(0xff191a1f),
                   fontSize: 16,

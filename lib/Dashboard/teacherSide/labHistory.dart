@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/appBar.dart';
+import '../../../components/appBar.dart';
 
-class LabHistory extends StatefulWidget {
-  const LabHistory({super.key});
+class LabHistoryT extends StatefulWidget {
+  const LabHistoryT({super.key});
 
   @override
-  State<LabHistory> createState() => _LabHistoryState();
+  State<LabHistoryT> createState() => _LabHistoryTState();
 }
 
-class _LabHistoryState extends State<LabHistory> {
+class _LabHistoryTState extends State<LabHistoryT> {
   // ── Lab history data ──
   final List<Map<String, String>> labHistory = [
     {
@@ -28,7 +28,7 @@ class _LabHistoryState extends State<LabHistory> {
       'icon': 'class',
     },
     {
-      'title': 'Economics for Engineers',
+      'title': 'Eco for Engineers',
       'date': '15 October 2025',
       'icon': 'courses',
     },

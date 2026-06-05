@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_version/Dashboard/teacherSide/activitiesPage.dart';
+import 'package:mobile_version/Dashboard/teacherSide/labHistory.dart';
+import 'package:mobile_version/authintication/joiningAcourse_page.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
@@ -15,6 +18,7 @@ import 'package:mobile_version/pages/quiz_completed.dart';
 import 'package:mobile_version/pages/quiz_preview.dart';
 import 'package:mobile_version/pages/role_page.dart';
 import 'package:mobile_version/pages/aiChat_page.dart';
+import 'package:mobile_version/pages/aiLabHistory_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: AiAskingPage(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
