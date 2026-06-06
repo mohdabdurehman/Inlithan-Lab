@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../components/appBar.dart';
 
-class LessonNotes extends StatefulWidget {
-  const LessonNotes({super.key});
+class LessonNotesT extends StatefulWidget {
+  const LessonNotesT({super.key});
 
   @override
-  State<LessonNotes> createState() => _LessonNotesState();
+  State<LessonNotesT> createState() => _LessonNotesTState();
 }
 
-class _LessonNotesState extends State<LessonNotes> {
+class _LessonNotesTState extends State<LessonNotesT> {
   int _currentNoteIndex = 0; // tracks current lesson note section
 
   final List<Map<String, String>> lessonNotes = [
@@ -137,8 +137,20 @@ class _LessonNotesState extends State<LessonNotes> {
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
-                              Image.asset('assets/flashcard.png',
-                                  width: 32, height: 32),
+                              Row(
+                                children: [
+                                  Icon(Icons.edit,
+                                      color: Color(0xff00b764), size: 15),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Edit',
+                                    style: GoogleFonts.raleway(
+                                        color: const Color(0xff00B764),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
 

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../components/appBar.dart';
 
-class AiAskingPage extends StatefulWidget {
-  const AiAskingPage({super.key});
+class AiAskingPageT extends StatefulWidget {
+  const AiAskingPageT({super.key});
 
   @override
-  State<AiAskingPage> createState() => _AiAskingPageState();
+  State<AiAskingPageT> createState() => _AiAskingPageTState();
 }
 
-class _AiAskingPageState extends State<AiAskingPage> {
+class _AiAskingPageTState extends State<AiAskingPageT> {
   // ── tracks which mode is selected ──
   bool _isStudyBuddy = true; // true = Study Buddy, false = Tutor
 

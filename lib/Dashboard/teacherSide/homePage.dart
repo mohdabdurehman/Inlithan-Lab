@@ -49,6 +49,168 @@ class _HomePageTState extends State<HomePageT> {
       'icon': 'assets/coursesIcon.png',
     },
   ];
+
+  final List<Map<String, String>> studentRequests = [
+    {
+      'id': '20201818@std.neu.edu.tr',
+      'course': 'Economics for engineers',
+    },
+    {
+      'id': '20247224@std.neu.edu.tr',
+      'course': 'Mobile programming',
+    },
+    {
+      'id': '20219080@std.neu.edu.tr',
+      'course': 'Engineering for engineers',
+    },
+    {
+      'id': '20232301@std.neu.edu.tr',
+      'course': 'Mobile programming',
+    },
+  ];
+
+  void _showStudentRequestsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: Color(0xff00B764), width: 1),
+        ),
+        backgroundColor: const Color(0xff191a1f),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Header
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  'New Student List',
+                  style: GoogleFonts.raleway(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(Icons.close, color: Colors.white, size: 20),
+                ),
+              ]),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Students (${studentRequests.length})',
+                    style: GoogleFonts.poppins(
+                      color: const Color(0xfffffffF),
+                      fontSize: 14,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Accept all logic
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('All students accepted!'),
+                          backgroundColor: Color(0xff00B764),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Accept All',
+                      style: GoogleFonts.raleway(
+                        color: const Color(0xff00b764),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+              // Student List
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: studentRequests.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 16),
+                itemBuilder: (context, index) {
+                  final student = studentRequests[index];
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              student['id']!,
+                              style: GoogleFonts.raleway(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              student['course']!,
+                              style: GoogleFonts.raleway(
+                                color: const Color(0xff8C8D8F),
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Accept single student logic
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Accepted: ${student['id']}'),
+                              backgroundColor: const Color(0xff00B764),
+                            ),
+                          );
+                          setState(() {
+                            studentRequests.removeAt(index);
+                          });
+                          Navigator.pop(context);
+                          _showStudentRequestsDialog(); // Refresh dialog
+                        },
+                        child: Text(
+                          'Accept',
+                          style: GoogleFonts.raleway(
+                            color: const Color(0xff00b764),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +227,10 @@ class _HomePageTState extends State<HomePageT> {
             )),
 
             // RESEARCH BOX
-            SliverToBoxAdapter(child: ResearchCard()),
+            SliverToBoxAdapter(
+                child: ResearchCard(
+              onViewList: _showStudentRequestsDialog,
+            )),
 
             SliverToBoxAdapter(child: SizedBox(height: 32)),
 
@@ -166,7 +331,9 @@ class _HomePageTState extends State<HomePageT> {
 
 //  Research Card Widget
 class ResearchCard extends StatelessWidget {
-  const ResearchCard({super.key});
+  final VoidCallback? onViewList;
+
+  const ResearchCard({super.key, this.onViewList});
 
   @override
   Widget build(BuildContext context) {
@@ -178,13 +345,13 @@ class ResearchCard extends StatelessWidget {
             color: const Color(0xff1e212a),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _ResearchText(text: "New Student\n Requests"),
-                _PreviewButton(text: "View List"),
+                _PreviewButton(text: "View List", onTap: onViewList),
               ],
             ),
           ),
@@ -235,32 +402,37 @@ class _ResearchText extends StatelessWidget {
 // Preview Button Widget
 class _PreviewButton extends StatelessWidget {
   final String text;
+  final VoidCallback? onTap;
 
   const _PreviewButton({
     super.key,
     required this.text,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xff00B764),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          children: [
-            Image.asset('assets/previewIcon.png'),
-            const SizedBox(width: 26),
-            Text(text,
-                style: GoogleFonts.raleway(
-                  color: const Color(0xff191a1f),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                )),
-          ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xff00B764),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Image.asset('assets/previewIcon.png'),
+              const SizedBox(width: 26),
+              Text(text,
+                  style: GoogleFonts.raleway(
+                    color: const Color(0xff191a1f),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  )),
+            ],
+          ),
         ),
       ),
     );
