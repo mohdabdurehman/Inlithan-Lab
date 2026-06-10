@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../components/quizCard.dart';
-import '../components/appBar.dart';
+import 'package:mobile_version/Dashboard/teacherSide/components/quizCard.dart';
 
-class QuizPreview extends StatelessWidget {
-  const QuizPreview({super.key});
+import '../../components/appBar.dart';
+
+class AssignmentPreviewT extends StatelessWidget {
+  const AssignmentPreviewT({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,33 +16,29 @@ class QuizPreview extends StatelessWidget {
         child: Column(
           children: [
             Appbar(
-                title: 'Quiz',
+                title: 'Assignment',
                 showSearch: false,
                 leading: Icon(Icons.arrow_back_ios,
                     color: Color(0xff00b764), size: 28)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: QuizCard(
-                label: 'Quiz',
-                title: 'Quiz Preview',
+              child: QuizCardT(
+                label: 'Assignment',
+                title: 'Assignment Preview',
                 questions: '50 questions',
-                duration: '30 minutes',
-                message: 'Good Luck :)',
+                duration: null,
+                text: 'Review Assignment',
+
                 icon: RotatedBox(
                   quarterTurns: 3,
                   child: Image.asset('assets/projectLogo.png',
                       width: 54, height: 120, color: const Color(0xff00B764)),
                 ),
-                showtwobtns: false,
+                showtwobtns: true,
+
                 //START BUTTON
-                Startbtn: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Quiz Started!'),
-                      backgroundColor: Color(0xff00B764),
-                    ),
-                  );
-                },
+                Viewbtn: () {},
+                Reviewbtn: () {},
               ),
             ),
           ],

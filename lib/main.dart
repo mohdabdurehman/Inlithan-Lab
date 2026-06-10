@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_version/Dashboard/teacherSide/activitiesPage.dart';
+import 'package:mobile_version/Dashboard/teacherSide/assignmentPreview.dart';
+import 'package:mobile_version/Dashboard/teacherSide/createActivity.dart';
 import 'package:mobile_version/Dashboard/teacherSide/createCourse2.dart';
 import 'package:mobile_version/Dashboard/teacherSide/editLessonNotes.dart';
+import 'package:mobile_version/Dashboard/teacherSide/quizPreview.dart';
 import 'package:mobile_version/Dashboard/teacherSide/saveLessonNotes.dart';
-import 'package:mobile_version/Dashboard/teacherSide/aiChating.dart';
+import 'package:mobile_version/Dashboard/teacherSide/quizReview.dart';
 import 'package:mobile_version/authintication/joiningAcourse_page.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
@@ -18,6 +21,7 @@ import 'package:mobile_version/pages/notifications_page.dart';
 import 'package:mobile_version/pages/pendingActivities_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 import 'package:mobile_version/pages/quiz_completed.dart';
+import 'package:mobile_version/pages/quiz_page.dart';
 import 'package:mobile_version/pages/quiz_preview.dart';
 import 'package:mobile_version/pages/role_page.dart';
 import 'package:mobile_version/pages/lessonNotes_page.dart';
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AiChatPageT(),
+      home: CreatecAtivityT(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/appBar.dart';
+import '../../components/appBar.dart';
 
-class testReview extends StatefulWidget {
-  const testReview({super.key});
+class AssignmentReviewT extends StatefulWidget {
+  const AssignmentReviewT({super.key});
 
   @override
-  State<testReview> createState() => _testReviewState();
+  State<AssignmentReviewT> createState() => _AssignmentReviewTState();
 }
 
-class _testReviewState extends State<testReview> {
+class _AssignmentReviewTState extends State<AssignmentReviewT> {
   int _currentIndex = 0;
-  int? _selectedAnswer;
-  bool _answered = false;
+  // int? _selectedAnswer;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -51,8 +50,7 @@ class _testReviewState extends State<testReview> {
     if (_currentIndex < questions.length - 1) {
       setState(() {
         _currentIndex++;
-        _selectedAnswer = null; // reset selection
-        _answered = false; // reset answered state
+        // _selectedAnswer = null; // reset selection
       });
     }
   }
@@ -61,8 +59,7 @@ class _testReviewState extends State<testReview> {
     if (_currentIndex > 0) {
       setState(() {
         _currentIndex--;
-        _selectedAnswer = null;
-        _answered = false;
+        // _selectedAnswer = null;
       });
     }
   }
@@ -77,7 +74,7 @@ class _testReviewState extends State<testReview> {
         child: Column(
           children: [
             Appbar(
-                title: 'Quiz',
+                title: 'Review',
                 showSearch: false,
                 leading: Icon(Icons.arrow_back_ios,
                     color: Color(0xff00b764), size: 28)),
@@ -108,7 +105,7 @@ class _testReviewState extends State<testReview> {
                           color: Color(0xff152826),
                         ),
                         child: Text(
-                          'Quiz Review',
+                          'Assignment Review',
                           style: GoogleFonts.raleway(
                             color: const Color(0xff00B764),
                             fontSize: 16,
@@ -174,112 +171,27 @@ class _testReviewState extends State<testReview> {
 
                     const SizedBox(height: 20),
 
-                    //  ANSWER OPTIONS
+                    //  ANSWER box
 
-                    ...List.generate(q['answers'].length, (i) {
-                      final int correct = q['correct'];
-                      final bool isSelected = _selectedAnswer == i;
-                      final bool isCorrect = i == correct;
-                      final bool isWrongPick = isSelected && !isCorrect;
-
-                      // ── background color ──
-                      Color bgColor() {
-                        if (!_answered)
-                          return const Color(0xff152826); // before answering
-                        if (isCorrect)
-                          return const Color(
-                              0xff00B764); // correct = always green
-                        if (isWrongPick)
-                          return const Color(
-                              0xff152826); // wrong pick = dark bg
-                        return const Color(0xff152826); // untouched = dark
-                      }
-
-                      // ── border color ──
-                      Color borderColor() {
-                        if (!_answered) return Colors.transparent;
-                        if (isWrongPick)
-                          return Colors.red; // wrong pick = red border
-                        return Colors.transparent;
-                      }
-
-                      // ── radio circle border color ──
-                      Color radioBorderColor() {
-                        if (!_answered) return const Color(0xff00B764);
-                        if (isCorrect)
-                          return const Color(0xff152826); // on green bg
-                        if (isWrongPick) return Colors.red;
-                        return const Color(0xff00B764);
-                      }
-
-                      // ── radio dot color ──
-                      Color radioDotColor() {
-                        if (isCorrect) return const Color(0xff152826);
-                        return Colors.red;
-                      }
-
-                      // ── text color ──
-                      Color textColor() {
-                        if (_answered && isCorrect)
-                          return const Color(0xff152826); // dark on green
-                        return Colors.white;
-                      }
-
-                      return GestureDetector(
-                        onTap: () {
-                          if (!_answered) {
-                            setState(() {
-                              _selectedAnswer = i;
-                              _answered = true;
-                            });
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: bgColor(),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: borderColor(), width: 2),
-                          ),
-                          child: Row(
-                            children: [
-                              // radio circle
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: radioBorderColor(), width: 2),
-                                ),
-                                child: (_answered && (isCorrect || isWrongPick))
-                                    ? Center(
-                                        child: Container(
-                                          width: 16,
-                                          height: 16,
-                                          decoration: BoxDecoration(
-                                            color: radioDotColor(),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      )
-                                    : null,
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Text(q['answers'][i],
-                                    style: GoogleFonts.raleway(
-                                      color: textColor(),
-                                      fontSize: 16,
-                                    )),
-                              ),
-                            ],
-                          ),
+                    Container(
+                      width: double.infinity,
+                      height: 140,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xff152826),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: const Color(0xff00B764), width: 1),
+                      ),
+                      child: Text(
+                        q['answers'][0],
+                        style: GoogleFonts.raleway(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
-                      );
-                    }),
+                      ),
+                    ),
 
                     const SizedBox(height: 20),
 
@@ -287,13 +199,11 @@ class _testReviewState extends State<testReview> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: _selectedAnswer != null ? _next : null,
+                        onTap: _next,
                         child: Text(
                           'Next',
                           style: GoogleFonts.raleway(
-                            color: _selectedAnswer != null
-                                ? const Color(0xff00B764)
-                                : Colors.grey,
+                            color: const Color(0xff00B764),
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
