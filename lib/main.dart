@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_version/Dashboard/teacherSide/activitiesPage.dart';
-import 'package:mobile_version/Dashboard/teacherSide/createCourse.dart';
-import 'package:mobile_version/Dashboard/teacherSide/lessonNotes.dart';
-import 'package:mobile_version/Dashboard/teacherSide/studentList.dart';
+import 'package:mobile_version/Dashboard/teacherSide/createCourse2.dart';
+import 'package:mobile_version/Dashboard/teacherSide/editLessonNotes.dart';
+import 'package:mobile_version/Dashboard/teacherSide/saveLessonNotes.dart';
+import 'package:mobile_version/Dashboard/teacherSide/aiChating.dart';
 import 'package:mobile_version/authintication/joiningAcourse_page.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
 import 'package:mobile_version/pages/activities_page.dart';
-import 'package:mobile_version/pages/aiAsking_page.dart';
+import 'package:mobile_version/pages/aiChat_page.dart';
 import 'package:mobile_version/pages/code_page.dart';
 import 'package:mobile_version/pages/courses_page.dart';
 import 'package:mobile_version/pages/explore_page.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LessonNotesT(),
+      home: AiChatPageT(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),

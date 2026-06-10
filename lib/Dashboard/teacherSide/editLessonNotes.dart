@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../components/appBar.dart';
 
-class LessonNotesT extends StatefulWidget {
-  const LessonNotesT({super.key});
+class editLessonNotesT extends StatefulWidget {
+  const editLessonNotesT({super.key});
 
   @override
-  State<LessonNotesT> createState() => _LessonNotesTState();
+  State<editLessonNotesT> createState() => _editLessonNotesTState();
 }
 
-class _LessonNotesTState extends State<LessonNotesT> {
+class _editLessonNotesTState extends State<editLessonNotesT> {
   int _currentNoteIndex = 0; // tracks current lesson note section
 
   final List<Map<String, String>> lessonNotes = [
     {
       'content':
-          'The Software Development Life Cycle (SDLC) is a structured approach that outlines all the  steps involved in creating software, from planning to maintenance. It ensures that software  is built systematically and meets user requirements.\n\n The Software Development Life Cycle (SDLC) consists of several key steps, each with a  specific purpose. These steps ensure that the software development process is systematic  and efficient. The main steps are:\n\n1. Planning: This is the initial step where the project’s goals are defined. The feasibility  of the project is analyzed, including cost, time, and resource estimates.\n 2. Requirements Analysis: Gather and analyze all functional and non-functional  requirements. This step helps to determine what the software must do to meet the  needs of users.   \n3. System Design: Convert the gathered requirements into a blueprint for the software.  The design outlines the architecture, modules, interfaces, and data flow.  \n 4. Implementation (Coding): The actual development of the software begins. Developers  write code based on the designs.  \n 5. Testing: Ensure that the software works correctly and meets all requirements. Bugs,  issues, and discrepancies are identified and resolved.   \n6. Deployment: Deliver the software to the user environment where it will operate. This  could involve installing the software on servers or providing it as a downloadable  product.  7. Maintenance: After deployment, maintenance ensures the software continues to work  smoothly and meets user needs. This includes fixing bugs, adding new features, and  making improvements.'
+          'The Software Development Life Cycle (SDLC) is a structured approach that outlines all the  steps involved in creating software, from planning to maintenance. It ensures that software  is built systematically and meets user requirements.\n\n The Software Development Life Cycle (SDLC) consists of several key steps, each with a  specific purpose. These steps ensure that the software development process is systematic  and efficient. The main steps are:\n\n1. Planning: This is the initial step where the project’s goals are defined. The feasibility  of the project is analyzed, including cost, time, and resource estimates.\n 2. Requirements Analysis: Gather and analyze all functional and non-functional  requirements. This step helps to determine what the software must do to meet the  needs of users.   \n3. System Design: Convert the gathered requirements into a blueprint for the software.  The design outlines the architecture, modules, interfaces, and data flow.  \n 4. Implementation (Coding): The actual development of the software begins. Developers  write code based on the designs.  \n 5. Testing: Ensure that the software works correctly and meets all requirements. Bugs,  issues, and discrepancies are identified and resolved.   \n6. Deployment: Deliver the software to the user environment where it will operate. This  could involve installing the software on servers or providing it as a downloadable  product.  \n7. Maintenance: After deployment, maintenance ensures the software continues to work  smoothly and meets user needs. This includes fixing bugs, adding new features, and  making improvements.'
     },
     {
       'content':
