@@ -91,16 +91,15 @@ class _ActivityCreationDialog extends StatefulWidget {
 }
 
 class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
-  // ✅ all defaults reset every time dialog opens
-  String _selectedCourse = 'Engineering Economics'; // ✅ fix 2 — state variable
-  String _activityType = 'Quiz';
-  String _timeBased = 'No';
-  String _questionType = 'Multiple Choice';
-  String _usePdf = 'No';
+  //  all defaults reset every time dialog opens
+  String? _selectedCourse;
+  String? _activityType;
+  String? _timeBased;
+  String? _questionType;
+  String? _usePdf;
   bool _pdfUploaded = false;
   final TextEditingController _questionsController = TextEditingController();
 
-  // ✅ fix 2 — list of courses
   final List<String> _courses = [
     'Engineering Economics',
     'Mobile Computing',
@@ -113,7 +112,7 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
     super.dispose();
   }
 
-  Widget _radioOption(String label, String groupValue, String value,
+  Widget _radioOption(String label, String? groupValue, String value,
       void Function(String) onChanged) {
     final bool isSelected = groupValue == value;
     return GestureDetector(
@@ -122,8 +121,8 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 22,
-            height: 22,
+            width: 24,
+            height: 24,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: const Color(0xff00B764), width: 2),
@@ -131,8 +130,8 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
             child: isSelected
                 ? Center(
                     child: Container(
-                      width: 10,
-                      height: 10,
+                      width: 16,
+                      height: 16,
                       decoration: const BoxDecoration(
                         color: Color(0xff00B764),
                         shape: BoxShape.circle,
@@ -147,7 +146,7 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
                 color: isSelected
                     ? const Color(0xff00B764)
                     : const Color(0xff8C8D8F),
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w500,
               )),
         ],
@@ -159,7 +158,7 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
     return Text(text,
         style: GoogleFonts.raleway(
           color: Colors.white,
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
         ));
   }
@@ -197,31 +196,29 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
 
             const SizedBox(height: 20),
 
-            // ── COURSE DROPDOWN ✅ fixed ──
+            // ── COURSE DROPDOWN fixed ──
             _label('Course:'),
             const SizedBox(height: 8),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xff1E212A),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xff2A2D3A)),
+                border: Border.all(color: const Color(0xff303530)),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
-                  value: _selectedCourse, // ✅ uses state variable
-                  dropdownColor: const Color(0xff1E212A),
+                  value: _selectedCourse, //  uses state variable
+                  dropdownColor: const Color(0xff191A1F),
                   style: GoogleFonts.raleway(color: Colors.white, fontSize: 14),
                   icon: const Icon(Icons.keyboard_arrow_down,
-                      color: Color(0xff8C8D8F)),
+                      color: Color(0xffffffff)),
                   items: _courses
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      setState(
-                          () => _selectedCourse = value); // ✅ updates state
+                      setState(() => _selectedCourse = value); //  updates state
                     }
                   },
                 ),
@@ -233,17 +230,30 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
             // ── ACTIVITY TYPE ──
             _label('Activity Type:'),
             const SizedBox(height: 8),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _radioOption('Quiz', _activityType, 'Quiz',
-                    (v) => setState(() => _activityType = v)),
-                const SizedBox(width: 24),
-                _radioOption('Assignment', _activityType, 'Assignment',
-                    (v) => setState(() => _activityType = v)),
+                Row(
+                  children: [
+                    _radioOption('Quiz', _activityType, 'Quiz',
+                        (v) => setState(() => _activityType = v)),
+                    const SizedBox(width: 24),
+                    _radioOption('Assignment', _activityType, 'Assignment',
+                        (v) => setState(() => _activityType = v)),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                if (_activityType == null)
+                  Text(
+                    'Please select an activity type',
+                    style: GoogleFonts.raleway(color: Colors.red),
+                  ),
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             // ── NUMBER OF QUESTIONS ──
             _label('Number of Questions:'),
@@ -251,16 +261,16 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
             TextField(
               controller: _questionsController,
               keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.white),
+              style: GoogleFonts.poppins(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Number of Questions',
                 hintStyle: GoogleFonts.raleway(
                     color: const Color(0xff8C8D8F), fontSize: 14),
                 filled: true,
-                fillColor: const Color(0xff1E212A),
+                fillColor: const Color(0xff191A1F),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xff2A2D3A)),
+                  borderSide: const BorderSide(color: Color(0xff303530)),
                 ),
               ),
             ),
@@ -270,6 +280,7 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
             // ── TIME BASED ──
             _label('Time Based:'),
             const SizedBox(height: 8),
+
             Row(
               children: [
                 _radioOption('Yes', _timeBased, 'Yes',
@@ -324,11 +335,11 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
               onTap: () => setState(() => _pdfUploaded = !_pdfUploaded),
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 decoration: BoxDecoration(
                   color: const Color(0xff1E212A),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xff2A2D3A)),
+                  border: Border.all(color: const Color(0xff242727)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -385,7 +396,7 @@ class _ActivityCreationDialogState extends State<_ActivityCreationDialog> {
                 label: Text('Create Activity',
                     style: GoogleFonts.raleway(
                       color: const Color(0xff191A1F),
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.w700,
                     )),
               ),

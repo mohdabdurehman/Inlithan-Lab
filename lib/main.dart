@@ -7,6 +7,7 @@ import 'package:mobile_version/Dashboard/teacherSide/editLessonNotes.dart';
 import 'package:mobile_version/Dashboard/teacherSide/quizPreview.dart';
 import 'package:mobile_version/Dashboard/teacherSide/saveLessonNotes.dart';
 import 'package:mobile_version/Dashboard/teacherSide/quizReview.dart';
+import 'package:mobile_version/Dashboard/teacherSide/submissionsPage.dart';
 import 'package:mobile_version/authintication/joiningAcourse_page.dart';
 import 'package:mobile_version/authintication/signup_Page.dart';
 import 'package:mobile_version/components/bottomNavbar.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CreatecAtivityT(),
+      home: SubmissionsPageT(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
