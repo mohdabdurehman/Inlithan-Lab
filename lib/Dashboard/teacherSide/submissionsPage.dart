@@ -20,23 +20,25 @@ class SubmissionsPageT extends StatelessWidget {
         child: Column(
           children: [
             Appbar(
-                title: 'd',
+                title: 'Submissions',
                 showSearch: false,
                 leading: Icon(Icons.arrow_back_ios,
                     color: Color(0xff00b764), size: 28)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: ListView.separated(
-                itemCount: submissions.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final s = submissions[index];
-                  return _SubmissionCard(
-                    name: s['name'],
-                    score: s['score'],
-                    total: s['total'],
-                  );
-                },
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: ListView.separated(
+                  itemCount: submissions.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 31),
+                  itemBuilder: (context, index) {
+                    final s = submissions[index];
+                    return _SubmissionCard(
+                      name: s['name'],
+                      score: s['score'],
+                      total: s['total'],
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -46,9 +48,8 @@ class SubmissionsPageT extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────
 // SUBMISSION CARD
-// ─────────────────────────────────────────
+
 class _SubmissionCard extends StatelessWidget {
   final String name;
   final int score;
@@ -63,16 +64,20 @@ class _SubmissionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
       decoration: BoxDecoration(
         color: const Color(0xff1E212A),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xff2A2D3A), width: 1),
+        borderRadius: BorderRadius.circular(8),
+        border: const Border(
+            bottom: BorderSide(color: const Color(0xff242727), width: 1),
+            top: BorderSide(color: const Color(0xff242727), width: 1),
+            right: BorderSide(color: const Color(0xff242727), width: 1),
+            left: BorderSide(color: const Color(0xff242727), width: 4)),
       ),
       child: Row(
         children: [
           // ── PERSON ICON ──
-          const Icon(Icons.person_outline, color: Color(0xff8C8D8F), size: 28),
+          const Icon(Icons.person, color: Color(0xffffffFf), size: 20),
 
           const SizedBox(width: 12),
 
@@ -81,8 +86,8 @@ class _SubmissionCard extends StatelessWidget {
             child: Text(name,
                 style: GoogleFonts.raleway(
                   color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 )),
           ),
 
@@ -94,7 +99,7 @@ class _SubmissionCard extends StatelessWidget {
                 TextSpan(
                   text: 'Score:  ',
                   style: GoogleFonts.raleway(
-                    color: const Color(0xff8C8D8F),
+                    color: const Color(0xfffffffF),
                     fontSize: 14,
                   ),
                 ),
@@ -123,6 +128,7 @@ class _SubmissionCard extends StatelessWidget {
               );
             },
             style: OutlinedButton.styleFrom(
+              backgroundColor: Color(0xff152826),
               side: const BorderSide(color: Color(0xff00B764), width: 1.5),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8)),
@@ -131,8 +137,8 @@ class _SubmissionCard extends StatelessWidget {
             child: Text('View',
                 style: GoogleFonts.raleway(
                   color: const Color(0xff00B764),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
                 )),
           ),
         ],
