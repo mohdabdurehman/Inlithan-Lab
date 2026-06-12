@@ -75,6 +75,7 @@ flutter:
     - assets\flashcard.png
     - assets\labLogo.png
     - assets\pdfLogo.png
+    - assets\copyLink.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

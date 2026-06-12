@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/activityCard.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/appBar.dart';
 
 // DATA MODELS
 
@@ -16,14 +17,14 @@ class WeekItem {
       this.isExpanded = false});
 }
 
-class PendingActivities extends StatefulWidget {
-  const PendingActivities({super.key});
+class CourseActivities extends StatefulWidget {
+  const CourseActivities({super.key});
 
   @override
-  State<PendingActivities> createState() => _PendingActivitiesState();
+  State<CourseActivities> createState() => CourseActivitiesState();
 }
 
-class _PendingActivitiesState extends State<PendingActivities> {
+class CourseActivitiesState extends State<CourseActivities> {
   // tracks which week is expanded
   int _expandedIndex = 0;
   int _selectedIndex = -1;
@@ -81,131 +82,135 @@ class _PendingActivitiesState extends State<PendingActivities> {
 
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Appbar(
+                title: 'Economics for Engineers',
+                showSearch: false,
+                leading: Icon(Icons.arrow_back_ios,
+                    color: Color(0xff00b764), size: 28)),
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  // course ACTIVITIES TITLE
 
-      //  APP BAR
-      appBar: AppBar(
-        backgroundColor: const Color(0xff191A1F),
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xff00B764)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Economics for engineers',
-          style: GoogleFonts.raleway(
-              color: const Color(0xff8c8d8f),
-              fontSize: 24,
-              fontWeight: FontWeight.w500),
-        ),
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(32),
-          child: Divider(
-            color: Color(0xff8c8d8f),
-            thickness: 1,
-            height: 32,
-          ),
-        ),
-      ),
-
-      body: CustomScrollView(
-        slivers: [
-          // PENDING ACTIVITIES TITLE
-
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 24),
-              child: Text('Pending Activities',
-                  style: GoogleFonts.raleway(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500)),
-            ),
-          ),
-
-          //  ACTIVITY CARDS
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: activities.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final activity = entry.value;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = _selectedIndex == index ? -1 : index;
-                      });
-                    },
+                  SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ActivitiesCard(
-                          title: activity['title']!,
-                          coursename: activity['code']!,
-                          icon: Image.asset(activity['icon']!),
-                          filled: _selectedIndex == index,
-                        ),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Course Activities',
+                              style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500)),
+                          Row(
+                            children: [
+                              Text('See More',
+                                  style: GoogleFonts.raleway(
+                                      color: Color(0xff00b764),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: Color(0xff00b764), size: 18),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
+                  ),
 
-          //  CURRICULUM TITLE
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(30, 32, 30, 12),
-              child: Text('Curriculum',
-                  style: GoogleFonts.raleway(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500)),
-            ),
-          ),
+                  //  ACTIVITY CARDS
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: activities.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final activity = entry.value;
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedIndex =
+                                    _selectedIndex == index ? -1 : index;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 24),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ActivitiesCard(
+                                  title: activity['title']!,
+                                  coursename: activity['code']!,
+                                  icon: Image.asset(activity['icon']!),
+                                  filled: _selectedIndex == index,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
 
-          //  WEEK ITEMS
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final week = weeks[index];
-                final bool isExpanded = _expandedIndex == index;
-                return _WeekTile(
-                  weeknum: week,
-                  isExpanded: isExpanded,
-                  onTap: () =>
-                      setState(() => _expandedIndex = isExpanded ? -1 : index),
-                );
-              },
-              childCount: weeks.length,
-            ),
-          ),
+                  //  CURRICULUM TITLE
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 32, 30, 12),
+                      child: Text('Curriculum',
+                          style: GoogleFonts.raleway(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500)),
+                    ),
+                  ),
 
-          //  ABOUT SECTION
-          SliverToBoxAdapter(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 30, vertical: 160),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('About This Course',
-                      style: GoogleFonts.raleway(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 32),
-                  Text(aboutText,
-                      style: GoogleFonts.raleway(
-                          color: const Color(0xff8C8D8F), fontSize: 24)),
+                  //  WEEK ITEMS
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final week = weeks[index];
+                        final bool isExpanded = _expandedIndex == index;
+                        return _WeekTile(
+                          weeknum: week,
+                          isExpanded: isExpanded,
+                          onTap: () => setState(
+                              () => _expandedIndex = isExpanded ? -1 : index),
+                        );
+                      },
+                      childCount: weeks.length,
+                    ),
+                  ),
+
+                  //  ABOUT SECTION
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 160),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('About This Course',
+                              style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500)),
+                          const SizedBox(height: 32),
+                          Text(aboutText,
+                              style: GoogleFonts.raleway(
+                                  color: const Color(0xff8C8D8F),
+                                  fontSize: 24)),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

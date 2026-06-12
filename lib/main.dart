@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_version/Dashboard/teacherSide/activitiesPage.dart';
 import 'package:mobile_version/Dashboard/teacherSide/assignmentPreview.dart';
+import 'package:mobile_version/Dashboard/teacherSide/courseActivity.dart';
+import 'package:mobile_version/Dashboard/teacherSide/courseActivity2.dart';
+import 'package:mobile_version/Dashboard/teacherSide/courseActivity3.dart';
 import 'package:mobile_version/Dashboard/teacherSide/createActivity.dart';
 import 'package:mobile_version/Dashboard/teacherSide/createCourse2.dart';
 import 'package:mobile_version/Dashboard/teacherSide/editLessonNotes.dart';
@@ -19,7 +22,7 @@ import 'package:mobile_version/pages/explore_page.dart';
 import 'package:mobile_version/pages/attemptingQuiz_page.dart';
 import 'package:mobile_version/pages/home_page.dart';
 import 'package:mobile_version/pages/notifications_page.dart';
-import 'package:mobile_version/pages/pendingActivities_page.dart';
+import 'package:mobile_version/pages/courseActivities_page.dart';
 import 'package:mobile_version/pages/profile_screen.dart';
 import 'package:mobile_version/pages/quiz_completed.dart';
 import 'package:mobile_version/pages/quiz_page.dart';
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SubmissionsPageT(),
+      home: CourseActivities3T(),
       routes: {
         'signup': (context) => const SignupPage(),
         'bottomnavbar': (context) => const Bottomnavbar(),
@@ -51,7 +54,7 @@ class MyApp extends StatelessWidget {
         "rolpage": (context) => const RolePage(),
         'quizpreview': (context) => const QuizPreview(),
         'quizcompleted': (context) => const QuizCompleted(),
-        'pendingactivities': (context) => const PendingActivities(),
+        'courseactivities': (context) => const CourseActivities(),
         'attemptingquiz': (context) => const AttemptingQuiz(),
       },
     );
