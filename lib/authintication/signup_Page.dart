@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/signUpBtn.dart';
+import '../services/auth_service.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -38,12 +39,14 @@ class SignupPage extends StatelessWidget {
               const SizedBox(height: 80),
 
               // GoogleButton
+              // GoogleButton
               btnStyle(
                 label: 'Signup with Google',
                 img:
                     Image.asset('assets/googleLogo.png', width: 32, height: 32),
                 color: const Color(0xff152826),
                 filled: true,
+                onPressed: () => AuthService.loginWithGoogle(),
               ),
               const SizedBox(height: 24),
 
@@ -53,6 +56,7 @@ class SignupPage extends StatelessWidget {
                 img: Image.asset('assets/gitLogo.png', width: 32, height: 32),
                 color: const Color(0xff152826),
                 filled: false,
+                onPressed: () => AuthService.loginWithGithub(),
               ),
             ],
           ),
