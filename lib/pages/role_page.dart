@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../config/api_config.dart';
+import '../providers/auth_provider.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({super.key});
@@ -25,6 +30,56 @@ class _RolePageState extends State<RolePage> {
           'As a teacher unlocks tools for creating lessons, generating activities, monitoring student progress, and understanding learning patterns across your class. You\'ll be able to assign tasks, review analytics, and use AI-powered insights to support every learner more effectively — without adding to your workload.',
     },
   ];
+
+  Future<void> _submitRole(BuildContext context) async {
+    final auth = context.read<AuthProvider>();
+    final role = _selected == 'Tutor' ? 'teacher' : 'student';
+
+    try {
+      final res = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}/auth/role'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${auth.token}',
+        },
+        body: jsonEncode({'role': role}),
+      );
+
+      print('Status: ${res.statusCode}');
+      print('Body: ${res.body}');
+      final data = jsonDecode(res.body);
+      if (data['success'] == true) {
+        await auth.setToken(data['token']);
+        if (context.mounted) {
+          final destination =
+              role == 'teacher' ? 'bottomnavbarT' : 'bottomnavbar';
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            destination,
+            (route) => false,
+          );
+        }
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to set role. Try again.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +136,8 @@ class _RolePageState extends State<RolePage> {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: _selected == null
-                      ? null
-                      : () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Selected: $_selected'),
-                              backgroundColor: const Color(0xff00B764),
-                              duration: const Duration(seconds: 1),
-                            ),
-                          );
-                        },
+                  onPressed:
+                      _selected == null ? null : () => _submitRole(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff00B764),
                     shape: RoundedRectangleBorder(

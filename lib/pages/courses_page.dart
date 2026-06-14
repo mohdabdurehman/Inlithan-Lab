@@ -1,35 +1,16 @@
 import 'package:flutter/material.dart';
 import '../components/coursesCard.dart';
 import '../components/appBar.dart';
+import 'package:provider/provider.dart';
+import '../providers/courses_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CoursesPage extends StatelessWidget {
   const CoursesPage({super.key});
 
-  static const List<Map<String, String>> courses = [
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Economics for Engineers',
-      'code': 'All 426',
-    },
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Graduation Project',
-      'code': 'COM 491',
-    },
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Graduation Project',
-      'code': 'COM 491',
-    },
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Graduation Project',
-      'code': 'COM 491',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final courses = context.watch<CoursesProvider>().courses;
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
       body: SafeArea(
@@ -57,26 +38,39 @@ class CoursesPage extends StatelessWidget {
                 ])),
 
             //  COURSE CARDS
+            //  COURSE CARDS
             Expanded(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: GridView.builder(
-                itemCount: courses.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 columns
-                    crossAxisSpacing: 24,
-                    mainAxisSpacing: 32,
-                    childAspectRatio: 1.0),
-                itemBuilder: (context, index) {
-                  return CourseCard(
-                    imgIcon: Image.asset(courses[index]['img']!),
-                    courseName: courses[index]['courseName']!,
-                    code: courses[index]['code']!,
-                  );
-                },
-              ),
-            )),
-            const SizedBox(height: 256),
+              child: courses.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No courses yet. Join one from Explore.',
+                        style: GoogleFonts.raleway(
+                          color: const Color(0xff8C8D8F),
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: GridView.builder(
+                        itemCount: courses.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 24,
+                                mainAxisSpacing: 32,
+                                childAspectRatio: 1.0),
+                        itemBuilder: (context, index) {
+                          final course = courses[index];
+                          return CourseCard(
+                            imgIcon: Image.asset('assets/coursesIcon.png'),
+                            courseName: course['title'] ?? '',
+                            code: course['code'] ?? '',
+                          );
+                        },
+                      ),
+                    ),
+            ),
           ],
         ),
       ),

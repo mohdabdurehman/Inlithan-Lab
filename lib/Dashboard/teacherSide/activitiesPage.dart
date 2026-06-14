@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/components/appBar.dart';
 import '../../../components/activityCard.dart';
+import 'package:provider/provider.dart';
+import '../../providers/activities_provider.dart';
 
 class ActivitiesPageT extends StatefulWidget {
   const ActivitiesPageT({super.key});
@@ -15,18 +17,7 @@ class _ActivitiesPageTState extends State<ActivitiesPageT> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> activities = [
-      {
-        'title': 'Quiz',
-        'code': 'Economics for Engineers',
-        'icon': 'assets/coursesIcon.png',
-      },
-      {
-        'title': 'Assignment',
-        'code': 'Graduation Project',
-        'icon': 'assets/coursesIcon.png',
-      },
-    ];
+    final activities = context.watch<ActivitiesProvider>().activities;
     return Scaffold(
         backgroundColor: const Color(0xff191A1F),
         body: SafeArea(
@@ -56,30 +47,43 @@ class _ActivitiesPageTState extends State<ActivitiesPageT> {
           ),
           SizedBox(height: 40),
           // ACTIVITIES CARDS
+          // ACTIVITIES CARDS
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-              itemCount: activities.length,
-              separatorBuilder: (__, _) => const SizedBox(height: 24),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_selectedIndex == index) {
-                          _selectedIndex = -1; // Deselect
-                        } else {
-                          _selectedIndex = index; // Select new card
-                        }
-                      });
+            child: activities.isEmpty
+                ? Center(
+                    child: Text(
+                      'No activities yet.',
+                      style: GoogleFonts.raleway(
+                        color: const Color(0xff8C8D8F),
+                        fontSize: 14,
+                      ),
+                    ),
+                  )
+                : ListView.separated(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                    itemCount: activities.length,
+                    separatorBuilder: (__, _) => const SizedBox(height: 24),
+                    itemBuilder: (context, index) {
+                      final activity = activities[index];
+                      return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_selectedIndex == index) {
+                                _selectedIndex = -1;
+                              } else {
+                                _selectedIndex = index;
+                              }
+                            });
+                          },
+                          child: ActivitiesCard(
+                            title: activity['type'] ?? '',
+                            coursename: activity['title'] ?? '',
+                            icon: Image.asset('assets/coursesIcon.png'),
+                            filled: _selectedIndex == index,
+                          ));
                     },
-                    child: ActivitiesCard(
-                      title: activities[index]['title']!,
-                      coursename: activities[index]['code']!,
-                      icon: Image.asset(activities[index]['icon']!),
-                      filled: _selectedIndex == index,
-                    ));
-              },
-            ),
+                  ),
           ),
         ])));
   }

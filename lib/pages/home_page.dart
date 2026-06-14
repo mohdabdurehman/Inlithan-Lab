@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../components/coursesCard.dart';
 import '../components/appBar.dart';
 import '../components/activityCard.dart';
+import 'package:provider/provider.dart';
+import '../providers/courses_provider.dart';
+import '../providers/activities_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,38 +17,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = -1;
 
-  final List<Map<String, String>> courses = [
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Economics for Engineers',
-      'code': 'All 426',
-    },
-    {
-      'img': 'assets/coursesIcon.png',
-      'courseName': 'Graduation Project',
-      'code': 'COM 491',
-    },
-  ];
-
-  final List<Map<String, String>> activities = [
-    {
-      'title': 'Quiz',
-      'code': 'Economics for Engineers',
-      'icon': 'assets/coursesIcon.png',
-    },
-    {
-      'title': 'Notes',
-      'code': 'Graduation Project',
-      'icon': 'assets/coursesIcon.png',
-    },
-    {
-      'title': 'test',
-      'code': 'Graduation Project',
-      'icon': 'assets/coursesIcon.png',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
+    final courses = context.watch<CoursesProvider>().courses;
+    final activities = context.watch<ActivitiesProvider>().activities;
+
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
       body: SafeArea(
@@ -75,29 +51,49 @@ class _HomePageState extends State<HomePage> {
             SliverToBoxAdapter(child: SizedBox(height: 24)),
 
             // COURSE CARDS GRID
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 32,
-                  childAspectRatio: 1.0,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => CourseCard(
-                    imgIcon: Image.asset(courses[index]['img']!),
-                    courseName: courses[index]['courseName']!,
-                    code: courses[index]['code']!,
+
+            if (courses.isEmpty)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+                  child: Text(
+                    'No courses yet. Join a course from the Explore',
+                    style: GoogleFonts.raleway(
+                      color: const Color(0xff8C8D8F),
+                      fontSize: 14,
+                    ),
                   ),
-                  childCount: courses.length,
+                ),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 24,
+                    mainAxisSpacing: 32,
+                    childAspectRatio: 1.0,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final course = courses[index];
+                      // final studentCount = (course['students'] as List?)?.length ?? 0;
+                      return CourseCard(
+                        imgIcon: Image.asset('assets/coursesIcon.png'),
+                        courseName: course['title'] ?? '',
+                        code: course['code'] ?? '',
+                      );
+                    },
+                    childCount: courses.length,
+                  ),
                 ),
               ),
-            ),
 
             SliverToBoxAdapter(child: SizedBox(height: 64)),
 
-            // ACTIVITIES HEADER
+            // ACTIVITIES TITLE
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -123,38 +119,53 @@ class _HomePageState extends State<HomePage> {
 
             SliverToBoxAdapter(child: SizedBox(height: 24)),
 
-            // ✅ HORIZONTAL LIST — works perfectly inside CustomScrollView
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 206,
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (notification) =>
-                      true, // to prevent the bouncing effect
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    itemCount: activities.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 24),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedIndex =
-                                _selectedIndex == index ? -1 : index;
-                          });
-                        },
-                        child: ActivitiesCard(
-                          title: activities[index]['title']!,
-                          coursename: activities[index]['code']!,
-                          icon: Image.asset(activities[index]['icon']!),
-                          filled: _selectedIndex == index,
-                        ),
-                      );
-                    },
+            // ACTIVITIES HEADER
+            if (activities.isEmpty)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    'No activities yet.',
+                    style: GoogleFonts.raleway(
+                      color: const Color(0xff8C8D8F),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              )
+            else
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 206,
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (notification) => true,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      itemCount: activities.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 24),
+                      itemBuilder: (context, index) {
+                        final activity = activities[index];
+                        // final submissions = (activity['submissions'] as List?)?.length ?? 0;
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedIndex =
+                                  _selectedIndex == index ? -1 : index;
+                            });
+                          },
+                          child: ActivitiesCard(
+                            title: activity['type'] ?? '',
+                            coursename: activity['title'] ?? '',
+                            icon: Image.asset('assets/coursesIcon.png'),
+                            filled: _selectedIndex == index,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
 
             SliverToBoxAdapter(child: SizedBox(height: 32)),
           ],

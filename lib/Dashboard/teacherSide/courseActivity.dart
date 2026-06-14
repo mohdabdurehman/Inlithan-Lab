@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import '../../components/activityCard.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../components/appBar.dart';
-
-// DATA MODELS
-
-class WeekItem {
-  final String week;
-  final String title;
-  final String? description;
-  final bool isExpanded;
-  WeekItem(
-      {required this.week,
-      required this.title,
-      this.description,
-      this.isExpanded = false});
-}
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../../providers/activities_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/courses_provider.dart';
+import '../../config/api_config.dart';
+import 'package:file_picker/file_picker.dart';
 
 class CourseActivitiesT extends StatefulWidget {
-  const CourseActivitiesT({super.key});
+  final Map<String, dynamic> course;
+
+  const CourseActivitiesT({super.key, required this.course});
 
   @override
   State<CourseActivitiesT> createState() => CourseActivitiesTState();
@@ -29,65 +25,88 @@ class CourseActivitiesTState extends State<CourseActivitiesT> {
   int _expandedIndex = 0;
   int _selectedIndex = -1;
   bool _isLinkCopied = false;
+  bool _isUploading = false;
+
+  Future<void> _pickAndUploadPdf() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result == null || result.files.single.path == null) return;
+
+    final file = result.files.single;
+    final token = context.read<AuthProvider>().token!;
+    final courseId = widget.course['_id'];
+
+    setState(() => _isUploading = true);
+
+    try {
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse('${ApiConfig.baseUrl}/courses/$courseId/upload'),
+      );
+      request.headers['Authorization'] = 'Bearer $token';
+      request.files.add(
+        await http.MultipartFile.fromPath('pdf', file.path!),
+      );
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      final data = jsonDecode(response.body);
+
+      if (data['success'] == true) {
+        // Refresh courses so this page gets the updated weeks list
+        await context.read<CoursesProvider>().fetchCourses();
+        final updated = context
+            .read<CoursesProvider>()
+            .courses
+            .firstWhere((c) => c['_id'] == courseId, orElse: () => null);
+
+        if (updated != null && mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CourseActivitiesT(course: updated),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(data['error'] ?? 'Upload failed'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isUploading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> activities = [
-      {
-        'title': 'Quiz',
-        'code': 'Economics for Engineers',
-        'icon': 'assets/coursesIcon.png',
-      },
-      {
-        'title': 'Notes',
-        'code': 'Graduation Project',
-        'icon': 'assets/coursesIcon.png',
-      },
-    ];
-
-    final List<WeekItem> weeks = [
-      WeekItem(
-          week: 'Week 4:',
-          title: 'Time Value of Money',
-          description:
-              'The Time Value of Money (TVM) is a fundamental principle in engineering economics that highlights how the value of money changes over time due to its earning potential.'),
-      WeekItem(week: 'Week 5:', title: 'Time Value of Money II'),
-      WeekItem(
-          week: 'Week 6:',
-          title: 'Evaluating a Single Project',
-          description:
-              'The Time Value of Money (TVM) is a fundamental principle in engineering economics that highlights how the value of money changes over time due to its earning potential.'),
-      WeekItem(
-          week: 'Week 7:',
-          title: 'Comparison and Selection among Alternatives'),
-      WeekItem(week: 'Week 8:', title: 'Midterm Exam'),
-      WeekItem(week: 'Week 9:', title: 'Depreciation Methods and Income Taxes'),
-      WeekItem(
-          week: 'Week 10:',
-          title: 'Evaluating Projects with the Benefit-Cost Ratio Method'),
-      WeekItem(week: 'Week 11:', title: 'Price Changes and Exchange Rates'),
-      WeekItem(week: 'Week 12:', title: 'Breakeven and Sensitivity Analysis'),
-      WeekItem(week: 'Week 1:', title: 'Introduction'),
-      WeekItem(week: 'Week 2:', title: 'Cost Concepts and Design Economics'),
-      WeekItem(week: 'Week 3:', title: 'Cost Estimation Techniques'),
-    ];
-
-    const String aboutText =
-        'Engineering Economics bridges the gap between technical decision-making and financial reasoning. This course introduces students to the principles of economic analysis applied to engineering projects, helping them evaluate costs, benefits, risks, and sustainability. Students will learn how to:\n\n'
-        '• Apply time value of money concepts to real-world engineering problems.\n\n'
-        '• Compare alternative designs and investments using cash flow analysis.\n\n'
-        '• Understand cost estimation, depreciation, and break-even analysis.\n\n'
-        '• Assess project feasibility with tools like Net Present Value (NPV), Internal Rate of Return (IRR), and Payback Period.\n\n'
-        '• Integrate economic thinking into engineering design, resource allocation, and policy decisions.\n\n'
-        'By the end of the course, learners will be equipped to make informed, financially sound engineering choices that balance innovation with practicality.';
-
+    final course = widget.course;
+    final List<dynamic> weeks = course['weeks'] ?? [];
+    final String courseTitle = course['title'] ?? '';
+    final String aboutText = course['about'] ?? '';
+    final List<dynamic> aboutPoints = course['aboutPoints'] ?? [];
+    final String aboutClosing = course['aboutClosing'] ?? '';
     return Scaffold(
       backgroundColor: const Color(0xff191A1F),
       body: SafeArea(
         child: Column(
           children: [
             Appbar(
-                title: 'Economics for Engineers',
+                title: courseTitle,
                 showSearch: false,
                 leading: Icon(Icons.arrow_back_ios,
                     color: Color(0xff00b764), size: 28)),
@@ -327,8 +346,8 @@ class CourseActivitiesTState extends State<CourseActivitiesT> {
                       ),
                     ),
                   ),
-                  // course ACTIVITIES TITLE
 
+                  // COURSE ACTIVITIES TITLE
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(30, 0, 30, 24),
@@ -340,86 +359,166 @@ class CourseActivitiesTState extends State<CourseActivitiesT> {
                                   color: Colors.white,
                                   fontSize: 24,
                                   fontWeight: FontWeight.w500)),
-                          Row(
-                            children: [
-                              Icon(Icons.add,
-                                  color: Color(0xff00b764), size: 18),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text('Create',
-                                  style: GoogleFonts.raleway(
-                                      color: Color(0xff00b764),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500)),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Go to the Activities tab to create one'),
+                                  backgroundColor: Color(0xff00b764),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.add,
+                                    color: Color(0xff00b764), size: 18),
+                                SizedBox(width: 4),
+                                Text('Create',
+                                    style: GoogleFonts.raleway(
+                                        color: Color(0xff00b764),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500)),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
 
-                  //  ACTIVITY CARDS
+                  //  ACTIVITY CARDS (filtered to this course)
                   SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(
-                        children: activities.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final activity = entry.value;
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedIndex =
-                                    _selectedIndex == index ? -1 : index;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 24),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: ActivitiesCard(
-                                  title: activity['title']!,
-                                  coursename: activity['code']!,
-                                  icon: Image.asset(activity['icon']!),
-                                  filled: _selectedIndex == index,
+                    child: Builder(builder: (context) {
+                      final allActivities =
+                          context.watch<ActivitiesProvider>().activities;
+                      final courseActivities = allActivities.where((a) {
+                        final activityCourseId = a['courseId'] is Map
+                            ? a['courseId']['_id']
+                            : a['courseId'];
+                        return activityCourseId == course['_id'];
+                      }).toList();
+
+                      if (courseActivities.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Text(
+                            'No activities for this course yet.',
+                            style: GoogleFonts.raleway(
+                              color: const Color(0xff8C8D8F),
+                              fontSize: 14,
+                            ),
+                          ),
+                        );
+                      }
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          children:
+                              courseActivities.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final activity = entry.value;
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedIndex =
+                                      _selectedIndex == index ? -1 : index;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 24),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: ActivitiesCard(
+                                    title: activity['type'] ?? '',
+                                    coursename: activity['title'] ?? '',
+                                    icon: Image.asset('assets/coursesIcon.png'),
+                                    filled: _selectedIndex == index,
+                                  ),
                                 ),
                               ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }),
+                  ),
+
+                  //  CURRICULUM TITLE + UPLOAD BUTTON
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 32, 30, 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Curriculum',
+                              style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500)),
+                          GestureDetector(
+                            onTap: _isUploading ? null : _pickAndUploadPdf,
+                            child: Row(
+                              children: [
+                                _isUploading
+                                    ? const SizedBox(
+                                        width: 16,
+                                        height: 16,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Color(0xff00b764),
+                                        ),
+                                      )
+                                    : Icon(Icons.upload_file,
+                                        color: Color(0xff00b764), size: 18),
+                                SizedBox(width: 6),
+                                Text(
+                                  _isUploading ? 'Processing...' : 'Upload PDF',
+                                  style: GoogleFonts.raleway(
+                                      color: Color(0xff00b764),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
                             ),
-                          );
-                        }).toList(),
+                          ),
+                        ],
                       ),
                     ),
                   ),
 
-                  //  CURRICULUM TITLE
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 32, 30, 12),
-                      child: Text('Curriculum',
-                          style: GoogleFonts.raleway(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500)),
-                    ),
-                  ),
-
                   //  WEEK ITEMS
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final week = weeks[index];
-                        final bool isExpanded = _expandedIndex == index;
-                        return _WeekTile(
-                          weeknum: week,
-                          isExpanded: isExpanded,
-                          onTap: () => setState(
-                              () => _expandedIndex = isExpanded ? -1 : index),
-                        );
-                      },
-                      childCount: weeks.length,
+                  if (weeks.isEmpty)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 12),
+                        child: Text(
+                          'No weeks yet. Upload a PDF to generate the first week.',
+                          style: GoogleFonts.raleway(
+                            color: const Color(0xff8C8D8F),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final week = weeks[index];
+                          final bool isExpanded = _expandedIndex == index;
+                          return _WeekTile(
+                            weeknum: week,
+                            isExpanded: isExpanded,
+                            onTap: () => setState(
+                                () => _expandedIndex = isExpanded ? -1 : index),
+                          );
+                        },
+                        childCount: weeks.length,
+                      ),
                     ),
-                  ),
 
                   //  ABOUT SECTION
                   SliverToBoxAdapter(
@@ -454,10 +553,30 @@ class CourseActivitiesTState extends State<CourseActivitiesT> {
                             ],
                           ),
                           const SizedBox(height: 32),
-                          Text(aboutText,
-                              style: GoogleFonts.raleway(
-                                  color: const Color(0xff8C8D8F),
-                                  fontSize: 20)),
+                          Text(
+                            aboutText.isNotEmpty
+                                ? aboutText
+                                : 'No description added yet.',
+                            style: GoogleFonts.raleway(
+                                color: const Color(0xff8C8D8F), fontSize: 20),
+                          ),
+                          if (aboutPoints.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            ...aboutPoints.map((point) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Text('• $point',
+                                      style: GoogleFonts.raleway(
+                                          color: const Color(0xff8C8D8F),
+                                          fontSize: 16)),
+                                )),
+                          ],
+                          if (aboutClosing.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            Text(aboutClosing,
+                                style: GoogleFonts.raleway(
+                                    color: const Color(0xff8C8D8F),
+                                    fontSize: 16)),
+                          ],
                         ],
                       ),
                     ),
@@ -475,7 +594,7 @@ class CourseActivitiesTState extends State<CourseActivitiesT> {
 // WEEK TILE WIDGET
 
 class _WeekTile extends StatelessWidget {
-  final WeekItem weeknum;
+  final Map<String, dynamic> weeknum;
   final bool isExpanded;
   final VoidCallback onTap;
 
@@ -514,7 +633,7 @@ class _WeekTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
               child: Row(
                 children: [
-                  Text('${weeknum.week}  ',
+                  Text('Week ${weeknum['number'] ?? ''}:  ',
                       style: GoogleFonts.raleway(
                         color: isExpanded
                             ? const Color(0xff191a1f)
@@ -523,7 +642,7 @@ class _WeekTile extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       )),
                   Expanded(
-                    child: Text(weeknum.title,
+                    child: Text(weeknum['title'] ?? '',
                         style: GoogleFonts.raleway(
                           color: isExpanded
                               ? const Color(0xff191a1f)
@@ -546,14 +665,14 @@ class _WeekTile extends StatelessWidget {
             ),
 
             //  Expanded content
-            if (isExpanded && weeknum.description != null) ...[
+            if (isExpanded) ...[
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(weeknum.description!,
+                    Text(weeknum['description'] ?? '',
                         style: GoogleFonts.raleway(
                           color: const Color(0xff8C8D8F),
                           fontSize: 16,

@@ -1,42 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_version/pages/courses_page.dart';
-import 'package:mobile_version/pages/explore_page.dart';
-import 'package:mobile_version/pages/home_page.dart';
-import 'package:mobile_version/pages/aiLabHistory_page.dart';
-import 'package:mobile_version/pages/activities_page.dart';
+import 'package:mobile_version/Dashboard/teacherSide/activitiesPage.dart';
+import 'package:mobile_version/Dashboard/teacherSide/coursesPage.dart';
+import 'package:mobile_version/Dashboard/teacherSide/homePage.dart';
+import 'package:mobile_version/Dashboard/teacherSide/labHistory.dart';
+import 'package:mobile_version/Dashboard/teacherSide/studentList.dart';
 import 'package:provider/provider.dart';
-import '../providers/courses_provider.dart';
-import '../providers/activities_provider.dart';
+import '../../../providers/courses_provider.dart';
+import '../../../providers/activities_provider.dart';
 // import 'package:mobile_version/pages/profile_screen.dart';
 
-class Bottomnavbar extends StatefulWidget {
-  const Bottomnavbar({super.key});
+class BottomnavbarT extends StatefulWidget {
+  const BottomnavbarT({super.key});
 
   @override
-  State<Bottomnavbar> createState() => _BottomnavbarState();
+  State<BottomnavbarT> createState() => _BottomnavbarTState();
 }
 
-class _BottomnavbarState extends State<Bottomnavbar> {
+class _BottomnavbarTState extends State<BottomnavbarT> {
   int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<CoursesProvider>().fetchCourses().then((_) {
-        debugPrint('Courses: ${context.read<CoursesProvider>().courses}');
-      });
+      context.read<CoursesProvider>().fetchCourses();
       context.read<CoursesProvider>().fetchExploreCourses();
       context.read<ActivitiesProvider>().fetchActivities();
     });
   }
 
   final List<Widget> _pages = [
-    HomePage(),
-    const CoursesPage(),
-    const LabHistory(),
-    const ActivitiesPage(),
-    const ExplorePage(),
+    HomePageT(),
+    const CoursesPageT(),
+    const LabHistoryT(),
+    const ActivitiesPageT(),
+    const StudentsPage(),
     // const ProfileScreen(),
   ];
 
@@ -99,14 +97,14 @@ class _BottomnavbarState extends State<Bottomnavbar> {
                 label: "Activities"),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  'assets/exploreLogo.png',
+                  'assets/stuLogo.png',
                   width: 60,
                   height: 44,
                   color: _selectedIndex == 4
                       ? const Color(0xff00B764)
                       : const Color(0xff8B8C8F),
                 ),
-                label: "Explore"),
+                label: "Students"),
             // BottomNavigationBarItem(
             //     icon: Image.asset(
             //       'assets/profileLogo.png',
